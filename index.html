@@ -5,89 +5,90 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DTECH | UJ Course Eligibility Checker</title>
   <style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Ensures the body takes up at least the full height of the viewport */
-  }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-  header {
-    background-color: #333;
-    color: white;
-    padding: 20px;
-    text-align: center;
-  }
+    header {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
 
-  header img {
-    height: 40px;
-    vertical-align: middle;
-  }
+    header img {
+      height: 40px;
+      vertical-align: middle;
+    }
 
-  main {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    flex-grow: 1; /* Ensures the main content grows to fill available space */
-  }
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      flex-grow: 1;
+    }
 
-  h1, h2 {
-    color: #333;
-  }
+    h1, h2 {
+      color: #333;
+    }
 
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-  }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
 
-  input, select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-  }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
 
-  button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
-    width: 100%;
-  }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
 
-  button:hover {
-    background-color: #45a049;
-  }
+    button:hover {
+      background-color: #45a049;
+    }
 
-  .result {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #e7f4e7;
-    border: 1px solid #4CAF50;
-    border-radius: 4px;
-  }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e7f4e7;
+      border: 1px solid #4CAF50;
+      border-radius: 4px;
+    }
 
-  footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    font-size: 14px;
-    margin-top: auto; /* Ensures the footer stays at the bottom of the page */
-  }
-</style>
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      margin-top: auto;
+    }
+  </style>
 </head>
 <body>
 
@@ -108,8 +109,10 @@
     <div id="subjectsContainer"></div>
 
     <button onclick="checkEligibility()">Check Eligibility</button>
+    <button onclick="showJobs()">Show Related Jobs</button>
 
     <div class="result" id="resultBox"></div>
+    <div class="result" id="jobsBox"></div>
   </main>
 
   <footer>
@@ -118,62 +121,69 @@
 
   <script>
     const courses = [
-  {
-    "name": "B ARCHITECTURE",
-    "requirements": {
-      "English": 60,
-      "Mathematics": 60
-    },
-    "minAPS": 30
-  },
-  {
-    "name": "BA COMMUNICATION DESIGN",
-    "requirements": {
-      "English": 60,
-      "Mathematics": 40
-    },
-    "minAPS": 26
-  },
-  {
-    "name": "BA COMMUNICATION DESIGN math lite",
-    "requirements": {
-      "English": 60,
-      "Mathematics Literacy": 50
-    },
-    "minAPS": 26
-  },
-  {
-    "name": "BA DIGITAL MEDIA DESIGN",
-    "requirements": {
-      "English": 60,
-      "Mathematics": 40
-    },
-    "minAPS": 25
-  },
-  {
-    "name": "BA DIGITAL MEDIA DESIGN math lite",
-    "requirements": {
-      "English": 60,
-      "Mathematics Literacy": 50
-    },
-    "minAPS": 26
-  },
-  {
-    "name": "BA INDUSTRIAL DESIGN",
-    "requirements": {
-      "English": 60,
-      "Mathematics": 40
-    },
-    "minAPS": 25
-  },
-  {
-    "name": "BA INDUSTRIAL DESIGN math lite",
-    "requirements": {
-      "English": 60,
-      "Mathematics Literacy": 50
-    },
-    "minAPS": 26
-  }
+      {
+        "name": "B ARCHITECTURE",
+        "requirements": {
+          "English": 60,
+          "Mathematics": 60
+        },
+        "minAPS": 30,
+        "jobs": ["Architect", "Urban Planner", "Interior Designer"]
+      },
+      {
+        "name": "BA COMMUNICATION DESIGN",
+        "requirements": {
+          "English": 60,
+          "Mathematics": 40
+        },
+        "minAPS": 26,
+        "jobs": ["Graphic Designer", "Creative Director", "Illustrator"]
+      },
+      {
+        "name": "BA COMMUNICATION DESIGN math lite",
+        "requirements": {
+          "English": 60,
+          "Mathematics Literacy": 50
+        },
+        "minAPS": 26,
+        "jobs": ["Brand Strategist", "UX Designer", "Advertising Specialist"]
+      },
+      {
+        "name": "BA DIGITAL MEDIA DESIGN",
+        "requirements": {
+          "English": 60,
+          "Mathematics": 40
+        },
+        "minAPS": 25,
+        "jobs": ["Multimedia Artist", "Web Designer", "Animator"]
+      },
+      {
+        "name": "BA DIGITAL MEDIA DESIGN math lite",
+        "requirements": {
+          "English": 60,
+          "Mathematics Literacy": 50
+        },
+        "minAPS": 26,
+        "jobs": ["Video Editor", "Content Creator", "Digital Marketer"]
+      },
+      {
+        "name": "BA INDUSTRIAL DESIGN",
+        "requirements": {
+          "English": 60,
+          "Mathematics": 40
+        },
+        "minAPS": 25,
+        "jobs": ["Product Designer", "CAD Specialist", "User Experience Engineer"]
+      },
+      {
+        "name": "BA INDUSTRIAL DESIGN math lite",
+        "requirements": {
+          "English": 60,
+          "Mathematics Literacy": 50
+        },
+        "minAPS": 26,
+        "jobs": ["Furniture Designer", "Design Consultant", "Technical Illustrator"]
+      }
     ];
 
     const courseSelect = document.getElementById('course');
@@ -213,25 +223,17 @@
         subjectCount++;
 
         let category = '';
-        let colorClass = '';
-
         if (mark >= required) {
-          if (diff <= 5) {
-            category = 'Minimum Met';
-          } else if (diff <= 25) {
-            category = 'Moderate Match';
-          } else if (diff <= 50) {
-            category = 'Strong Match';
-          } else {
-            category = 'Very Strong Match';
-          }
+          if (diff <= 5) category = 'Minimum Met';
+          else if (diff <= 25) category = 'Moderate Match';
+          else if (diff <= 50) category = 'Strong Match';
+          else category = 'Very Strong Match';
         } else {
           category = 'Below Requirement';
           anyBelowMinimum = true;
         }
 
         totalScore += mark;
-
         results.push(`${subject}: ${mark}% — ${category}`);
       }
 
@@ -250,9 +252,7 @@
         apsSuccess = 25;
       }
 
-      if (anyBelowMinimum) {
-        apsSuccess = Math.min(apsSuccess, 40);
-      }
+      if (anyBelowMinimum) apsSuccess = Math.min(apsSuccess, 40);
 
       const avgSubjectScore = totalScore / subjectCount;
       const subjectScoreBoost = Math.min((avgSubjectScore - 50) * 0.5, 30);
@@ -264,6 +264,22 @@
         <ul>${results.map(r => `<li>${r}</li>`).join('')}</ul>
         <p><strong>${apsMsg}</strong></p>
         <p><strong>Estimated success rate: ${finalEstimate}%</strong></p>
+      `;
+    }
+
+    function showJobs() {
+      const selectedCourse = courses[courseSelect.value];
+      const jobs = selectedCourse.jobs || [];
+      const jobsBox = document.getElementById('jobsBox');
+
+      if (jobs.length === 0) {
+        jobsBox.innerHTML = "<p>No job information available for this course.</p>";
+        return;
+      }
+
+      jobsBox.innerHTML = `
+        <h3>Possible Career Paths for ${selectedCourse.name}</h3>
+        <ul>${jobs.map(job => `<li>${job}</li>`).join('')}</ul>
       `;
     }
   </script>
