@@ -5,120 +5,95 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DTECH | UJ Course Eligibility Checker</title>
   <style>
-    * {
+    body {
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f7fb;
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    .container {
-      background-color: white;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      padding: 30px;
-      width: 100%;
-      max-width: 600px;
-      margin: 20px;
+      background-color: #f4f4f4;
     }
 
     header {
+      background-color: #333;
+      color: white;
+      padding: 20px;
       text-align: center;
-      margin-bottom: 30px;
     }
 
     header img {
-      height: 50px;
-      margin-bottom: 10px;
+      height: 40px;
+      vertical-align: middle;
     }
 
-    header h1 {
-      font-size: 24px;
-      color: #111827;
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
     }
 
-    h2 {
-      font-size: 20px;
-      color: #2563eb;
-      margin-bottom: 20px;
-      text-align: center;
+    h1, h2 {
+      color: #333;
     }
 
     label {
-      font-weight: 600;
       display: block;
       margin-bottom: 8px;
+      font-weight: bold;
     }
 
-    input,
-    select {
+    input, select {
       width: 100%;
       padding: 10px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 4px;
       font-size: 16px;
-      background-color: #f9fafb;
     }
 
     button {
-      padding: 12px 20px;
-      background-color: #2563eb;
+      background-color: #4CAF50;
       color: white;
       border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      width: 100%;
+      padding: 10px 20px;
+      font-size: 16px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      border-radius: 4px;
+      width: 100%;
     }
 
     button:hover {
-      background-color: #1d4ed8;
+      background-color: #45a049;
     }
 
     .result {
-      margin-top: 30px;
-      padding: 20px;
-      border-left: 4px solid #2563eb;
-      background-color: #f0f9ff;
-      border-radius: 6px;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e7f4e7;
+      border: 1px solid #4CAF50;
+      border-radius: 4px;
     }
 
     footer {
+      background-color: #333;
+      color: white;
       text-align: center;
-      font-size: 14px;
-      margin-top: 40px;
-      color: #888;
-    }
-
-    footer a {
-      color: #2563eb;
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
+      padding: 10px;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <img src="logo.png" alt="DTECH Logo" />
-      <h1>DTECH University Course Eligibility Checker</h1>
-    </header>
+  <header>
+    <img src="logo.png" alt="DTECH Logo" />
+    <h1>DTECH University Course Eligibility Checker</h1>
+  </header>
 
+  <main>
     <h2>UJ Course Eligibility Checker</h2>
 
     <label for="course">Choose a course:</label>
@@ -132,10 +107,10 @@
     <button onclick="checkEligibility()">Check Eligibility</button>
 
     <div class="result" id="resultBox"></div>
-  </div>
+  </main>
 
   <footer>
-    &copy; 2025 DTECH | Developed and Owned by <a href="#">Preasx24</a>. All rights reserved.
+    &copy; 2025 DTECH | Developed and Owned by Preasx24. All rights reserved.
   </footer>
 
   <script>
@@ -208,26 +183,21 @@
         if (mark >= required) {
           if (diff <= 5) {
             category = 'Minimum Met';
-            colorClass = 'minimum-met';
           } else if (diff <= 25) {
             category = 'Moderate Match';
-            colorClass = 'strong-match';
           } else if (diff <= 50) {
             category = 'Strong Match';
-            colorClass = 'strong-match';
           } else {
             category = 'Very Strong Match';
-            colorClass = 'very-strong-match';
           }
         } else {
           category = 'Below Requirement';
-          colorClass = 'below-requirement';
           anyBelowMinimum = true;
         }
 
         totalScore += mark;
 
-        results.push(`<span class="${colorClass}">${subject}: ${mark}% — ${category}</span>`);
+        results.push(`${subject}: ${mark}% — ${category}`);
       }
 
       let apsMsg = '';
