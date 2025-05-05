@@ -5,86 +5,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DTECH | UJ Course Eligibility Checker</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-    }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures the body takes up at least the full height of the viewport */
+  }
 
-    header {
-      background-color: #333;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+  header {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
 
-    header img {
-      height: 40px;
-      vertical-align: middle;
-    }
+  header img {
+    height: 40px;
+    vertical-align: middle;
+  }
 
-    main {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
-      background-color: white;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-    }
+  main {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    flex-grow: 1; /* Ensures the main content grows to fill available space */
+  }
 
-    h1, h2 {
-      color: #333;
-    }
+  h1, h2 {
+    color: #333;
+  }
 
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
 
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 16px;
-    }
+  input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
 
-    button {
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 4px;
-      width: 100%;
-    }
+  button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+  }
 
-    button:hover {
-      background-color: #45a049;
-    }
+  button:hover {
+    background-color: #45a049;
+  }
 
-    .result {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #e7f4e7;
-      border: 1px solid #4CAF50;
-      border-radius: 4px;
-    }
+  .result {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e7f4e7;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+  }
 
-    footer {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 10px;
-      position: absolute;
-      width: 100%;
-      bottom: 0;
-    }
-  </style>
+  footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    margin-top: auto; /* Ensures the footer stays at the bottom of the page */
+  }
+</style>
 </head>
 <body>
 
