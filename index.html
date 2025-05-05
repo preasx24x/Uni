@@ -2,114 +2,123 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DTECH | UJ Course Eligibility Checker</title>
   <style>
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
+
     body {
       font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      background: #f1f5f9;
-      color: #1f2937;
+      background-color: #f4f7fb;
+      color: #333;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       min-height: 100vh;
     }
-    header {
-      background: #111827;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    header img {
-      height: 60px;
-      vertical-align: middle;
-    }
+
     .container {
-      max-width: 800px;
-      margin: 30px auto;
-      background: white;
+      background-color: white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
-    h2 {
-      text-align: center;
-      color: #2563eb;
-    }
-    label {
-      margin-top: 15px;
-      display: block;
-      font-weight: 600;
-    }
-    input, select {
-      padding: 10px;
-      margin-top: 5px;
       width: 100%;
-      max-width: 400px;
-      border-radius: 6px;
-      border: 1px solid #d1d5db;
-      background: #f9fafb;
+      max-width: 600px;
+      margin: 20px;
     }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    header img {
+      height: 50px;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      font-size: 24px;
+      color: #111827;
+    }
+
+    h2 {
+      font-size: 20px;
+      color: #2563eb;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+      background-color: #f9fafb;
+    }
+
     button {
-      margin-top: 20px;
       padding: 12px 20px;
-      background: #2563eb;
+      background-color: #2563eb;
       color: white;
       border: none;
       border-radius: 6px;
       font-weight: bold;
+      width: 100%;
       cursor: pointer;
       transition: background 0.3s ease;
     }
+
     button:hover {
-      background: #1d4ed8;
+      background-color: #1d4ed8;
     }
+
     .result {
-      margin-top: 25px;
+      margin-top: 30px;
       padding: 20px;
-      border-radius: 8px;
       border-left: 4px solid #2563eb;
-      background: #f0f9ff;
+      background-color: #f0f9ff;
+      border-radius: 6px;
     }
-    .result ul {
-      padding-left: 20px;
-    }
-    .below-requirement {
-      color: red;
-      font-weight: bold;
-    }
-    .minimum-met {
-      color: orange;
-      font-weight: bold;
-    }
-    .strong-match {
-      color: green;
-      font-weight: bold;
-    }
-    .very-strong-match {
-      color: goldenrod;
-      font-weight: bold;
-    }
+
     footer {
-      margin-top: auto;
-      background: #111827;
-      color: #d1d5db;
       text-align: center;
-      padding: 20px;
       font-size: 14px;
+      margin-top: 40px;
+      color: #888;
+    }
+
+    footer a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <img src="logo.png" alt="DTECH Logo" />
-    <h1>DTECH University Course Checker</h1>
-  </header>
-
   <div class="container">
+    <header>
+      <img src="logo.png" alt="DTECH Logo" />
+      <h1>DTECH University Course Eligibility Checker</h1>
+    </header>
+
     <h2>UJ Course Eligibility Checker</h2>
 
     <label for="course">Choose a course:</label>
@@ -126,7 +135,7 @@
   </div>
 
   <footer>
-    &copy; 2025 DTECH | Developed and Owned by Preasx24. All rights reserved.
+    &copy; 2025 DTECH | Developed and Owned by <a href="#">Preasx24</a>. All rights reserved.
   </footer>
 
   <script>
