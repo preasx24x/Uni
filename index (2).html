@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,6 +25,18 @@
       color: white;
       padding: 10px 0;
       text-align: center;
+      position: relative;
+    }
+    #supportBtn {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
     }
     main {
       max-width: 800px;
@@ -79,58 +90,48 @@
       font-size: 14px;
       margin-top: auto;
     }
+    #notice {
+      color: red;
+      font-weight: bold;
+      margin: 10px 0;
+    }
   </style>
 </head>
-<body>
-
-  <div class="logo-container">
+<body>  <header>
+    <h1>DTECH Course Checker</h1>
+    <button id="supportBtn" onclick="window.location.href='https://conductorhimselfwhipped.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365'">Support</button>
+  </header>  <div class="logo-container">
     <img src="logo.png" alt="DTECH Logo" />
-  </div>
-
-  <main>
+  </div>  <main>
     <h2>UJ Course Eligibility Checker</h2>
+    <div id="notice"></div><label for="course">Choose a course:</label>
+<select id="course"></select>
 
-    <label for="course">Choose a course:</label>
-    <select id="course"></select>
+<label for="aps">Enter your APS:</label>
+<input type="number" id="aps" min="0" max="50" />
 
-    <label for="aps">Enter your APS:</label>
-    <input type="number" id="aps" min="0" max="50" />
+<div id="subjectsContainer"></div>
 
-    <div id="subjectsContainer"></div>
+<button id="eligibilityBtn" onclick="handleButtonClick('eligibilityBtn', checkEligibility)">Check Eligibility</button>
+<button id="jobsBtn" onclick="handleButtonClick('jobsBtn', showJobs)">Show Related Jobs</button>
 
-    <button id="eligibilityBtn" onclick="handleButtonClick('eligibilityBtn', checkEligibility)">Check Eligibility</button>
-    <button id="jobsBtn" onclick="handleButtonClick('jobsBtn', showJobs)">Show Related Jobs</button>
+<div class="result" id="resultBox"></div>
+<div class="result" id="jobsBox"></div>
 
-    <div class="result" id="resultBox"></div>
-    <div class="result" id="jobsBox"></div>
-  </main>
-
-  <footer>
+  </main>  <footer>
     &copy; 2025 DTECH | Developed and Owned by Preasx24. All rights reserved.
-  </footer>
+  </footer>  <script>
+    const adUrl = 'https://conductorhimselfwhipped.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365';
+    let eligibilityClicks = 0, jobsClicks = 0;
+    const maxClicks = Math.random() < 0.5 ? 8 : 12;
+    const originalButtons = {};
 
-  <script>
-    const courses = [
-      {
-        name: "B ARCHITECTURE",
-        requirements: { English: 60, Mathematics: 60 },
-        minAPS: 30,
-        jobs: ["Architect", "Urban Planner", "Interior Designer"]
-      },
-      {
-        name: "Diploma in Food Technology (Extended)",
-        code: "D2FTEQ",
-        minAPS: 22,
-        requirements: {
-          English: 50,
-          Mathematics: 40,
-          PhysicalSciences: 40,
-          LifeSciences: 40
-        },
-        jobs: ["Food Technologist", "Food Processing Specialist", "Food Safety Expert"],
-        campus: "DFC"
-      }
-    ];
+    const courses = [{
+      name: "B ARCHITECTURE",
+      requirements: { English: 60, Mathematics: 60 },
+      minAPS: 30,
+      jobs: ["Architect", "Urban Planner", "Interior Designer"]
+    }];
 
     const courseSelect = document.getElementById('course');
     courses.forEach((course, index) => {
@@ -139,130 +140,75 @@
       opt.textContent = course.name;
       courseSelect.appendChild(opt);
     });
-
-    courseSelect.addEventListener('change', () => {
-      const selectedCourse = courses[courseSelect.value];
-      const container = document.getElementById('subjectsContainer');
-      container.innerHTML = '';
-      for (const subject in selectedCourse.requirements) {
-        container.innerHTML += `
-          <label>${subject} Mark:</label>
-          <input type="number" id="sub-${subject}" min="0" max="100" />
-        `;
-      }
-    });
     courseSelect.dispatchEvent(new Event('change'));
 
-    let eligibilityClicks = 0;
-    let jobsClicks = 0;
-
-    function handleButtonClick(buttonId, originalFunction) {
-      if (buttonId === 'eligibilityBtn') {
-        eligibilityClicks++;
-        if (eligibilityClicks === 10) {
-          showAdButton(buttonId);
-          return;
-        }
-      } else if (buttonId === 'jobsBtn') {
-        jobsClicks++;
-        if (jobsClicks === 10) {
-          showAdButton(buttonId);
-          return;
-        }
+    courseSelect.addEventListener('change', () => {
+      const selected = courses[courseSelect.value];
+      const container = document.getElementById('subjectsContainer');
+      container.innerHTML = '';
+      for (const sub in selected.requirements) {
+        container.innerHTML += `<label>${sub} Mark:</label><input type="number" id="sub-${sub}" min="0" max="100">`;
       }
+    });
 
-      originalFunction();
+    function handleButtonClick(id, action) {
+      if (id === 'eligibilityBtn') eligibilityClicks++;
+      else jobsClicks++;
+
+      const clicks = id === 'eligibilityBtn' ? eligibilityClicks : jobsClicks;
+
+      if (clicks >= maxClicks) {
+        showAd(id);
+        return;
+      }
+      action();
     }
 
-    function showAdButton(buttonId) {
-      const adButton = document.createElement('button');
-      adButton.textContent = 'Ad';
-      adButton.style.backgroundColor = 'red';
-      adButton.onclick = () => {
-        window.location.href = 'https://conductorhimselfwhipped.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365';
-      };
-      adButton.id = buttonId;
+    function showAd(id) {
+      const oldBtn = document.getElementById(id);
+      originalButtons[id] = oldBtn.cloneNode(true);
 
-      const oldButton = document.getElementById(buttonId);
-      oldButton.replaceWith(adButton);
+      const adBtn = document.createElement('button');
+      adBtn.textContent = 'Click here & wait 8s to get features back';
+      adBtn.style.backgroundColor = 'red';
+      adBtn.onclick = () => {
+        document.getElementById('notice').textContent = 'Click the ad and wait 8s, then return. Features will come back.';
+        window.open(adUrl, '_blank');
+        setTimeout(() => restoreButton(id), 8000);
+      };
+
+      oldBtn.replaceWith(adBtn);
+    }
+
+    function restoreButton(id) {
+      if (originalButtons[id]) {
+        const adBtn = document.getElementById(id);
+        adBtn.replaceWith(originalButtons[id]);
+        document.getElementById('notice').textContent = '';
+        if (id === 'eligibilityBtn') eligibilityClicks = 0;
+        if (id === 'jobsBtn') jobsClicks = 0;
+      }
     }
 
     function checkEligibility() {
-      const selectedCourse = courses[courseSelect.value];
-      const userAPS = parseInt(document.getElementById('aps').value);
-      const results = [];
-
-      let totalScore = 0;
-      let subjectCount = 0;
-      let anyBelowMinimum = false;
-
-      for (const subject in selectedCourse.requirements) {
-        const mark = parseInt(document.getElementById(`sub-${subject}`).value);
-        const required = selectedCourse.requirements[subject];
-        const diff = mark - required;
-        subjectCount++;
-
-        let category = '';
-        let color = '';
-
-        if (mark >= required) {
-          if (diff <= 5) { category = 'Minimum Met'; color = 'orange'; }
-          else if (diff <= 25) { category = 'Moderate Match'; color = 'gold'; }
-          else if (diff <= 50) { category = 'Strong Match'; color = 'lightgreen'; }
-          else { category = 'Very Strong Match'; color = 'green'; }
-        } else {
-          category = 'Below Requirement'; color = 'red'; anyBelowMinimum = true;
-        }
-
-        totalScore += mark;
-        results.push(`<li style="color: ${color};">${subject}: ${mark}% — ${category}</li>`);
+      const selected = courses[courseSelect.value];
+      const aps = parseInt(document.getElementById('aps').value);
+      const marks = selected.requirements;
+      let results = [], below = false;
+      for (const sub in marks) {
+        const mark = parseInt(document.getElementById(`sub-${sub}`).value);
+        if (mark < marks[sub]) below = true;
+        results.push(`<li>${sub}: ${mark}%</li>`);
       }
-
-      let apsMsg = '';
-      const apsDiff = userAPS - selectedCourse.minAPS;
-      let apsSuccess = 0;
-
-      if (userAPS >= selectedCourse.minAPS) {
-        if (apsDiff <= 2) apsMsg = 'APS: Just Met';
-        else if (apsDiff <= 6) apsMsg = 'APS: Moderate';
-        else if (apsDiff <= 12) apsMsg = 'APS: Strong';
-        else apsMsg = 'APS: Very Strong';
-        apsSuccess = Math.min(apsDiff * 5 + 40, 95);
-      } else {
-        apsMsg = 'APS: Below Requirement';
-        apsSuccess = 25;
-      }
-
-      if (anyBelowMinimum) apsSuccess = Math.min(apsSuccess, 40);
-
-      const avgSubjectScore = totalScore / subjectCount;
-      const subjectScoreBoost = Math.min((avgSubjectScore - 50) * 0.5, 30);
-      const finalEstimate = Math.min(apsSuccess + subjectScoreBoost, 99).toFixed(1);
-
       document.getElementById('resultBox').innerHTML = `
-        <h3>Results for ${selectedCourse.name}</h3>
-        <ul>${results.join('')}</ul>
-        <p><strong>${apsMsg}</strong></p>
-        <p><strong>Estimated success rate: ${finalEstimate}%</strong></p>
-      `;
+        <h3>Results</h3><ul>${results.join('')}</ul>
+        <p>APS: ${aps} / Required: ${selected.minAPS}</p>
+        <p>${below ? 'Some subjects below required marks' : 'All subjects meet requirements'}</p>`;
     }
 
     function showJobs() {
-      const selectedCourse = courses[courseSelect.value];
-      const jobs = selectedCourse.jobs || [];
-      const jobsBox = document.getElementById('jobsBox');
-
-      if (jobs.length === 0) {
-        jobsBox.innerHTML = "<p>No job information available for this course.</p>";
-        return;
-      }
-
-      jobsBox.innerHTML = `
-        <h3>Possible Career Paths for ${selectedCourse.name}</h3>
-        <ul>${jobs.map(job => `<li>${job}</li>`).join('')}</ul>
-      `;
+      const selected = courses[courseSelect.value];
+      document.getElementById('jobsBox').innerHTML = `<h3>Careers</h3><ul>${selected.jobs.map(j => `<li>${j}</li>`).join('')}</ul>`;
     }
-  </script>
-
-</body>
+  </script></body>
 </html>
