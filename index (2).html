@@ -159,13 +159,13 @@
     function handleButtonClick(buttonId, originalFunction) {
       if (buttonId === 'eligibilityBtn') {
         eligibilityClicks++;
-        if (eligibilityClicks === 2) {
+        if (eligibilityClicks === 10) {
           showAdButton(buttonId);
           return;
         }
       } else if (buttonId === 'jobsBtn') {
         jobsClicks++;
-        if (jobsClicks === 2) {
+        if (jobsClicks === 10) {
           showAdButton(buttonId);
           return;
         }
