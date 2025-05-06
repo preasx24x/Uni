@@ -4,109 +4,75 @@
   <meta charset="UTF-8">
   <title>D-TECh University Eligibility Checker</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      background: linear-gradient(to bottom, #f9f9f9, #e0e0e0);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
     }
 
     header {
-      text-align: center;
-      padding: 30px 20px 10px;
-    }
-
-    img {
-      width: 130px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    h1 {
-      color: #333;
-      font-size: 30px;
-      margin-top: 15px;
-    }
-
-    main {
-      flex: 1;
+      background-color: #fff;
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    header img {
+      width: 120px;
+    }
+
+    header h1 {
+      margin: 10px 0 0;
+      color: #222;
+      font-size: 26px;
     }
 
     .button-container {
+      padding: 30px 20px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 18px;
-      width: 100%;
-      max-width: 600px;
-      margin-top: 30px;
+      gap: 15px;
+      max-width: 500px;
+      margin: 0 auto;
     }
 
     .uni-button {
       background-color: #0044cc;
       color: #fff;
       border: none;
-      padding: 16px 28px;
+      padding: 15px;
       font-size: 16px;
-      font-weight: 500;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      width: 100%;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      transition: background 0.3s ease;
     }
 
     .uni-button:hover {
       background-color: #0033aa;
-      transform: translateY(-2px);
     }
 
     .terms-button {
-      background-color: transparent;
-      color: #555;
-      border: 2px solid #888;
-      padding: 12px 22px;
-      margin-top: 40px;
-      font-size: 15px;
-      border-radius: 8px;
+      margin-top: 20px;
+      background: #fff;
+      color: #444;
+      border: 1px solid #aaa;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 14px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background 0.2s ease;
     }
 
     .terms-button:hover {
-      background-color: #ddd;
-      color: #222;
-      border-color: #444;
+      background: #eee;
     }
 
     footer {
       background-color: #222;
       color: #ccc;
       text-align: center;
-      padding: 15px 10px;
+      padding: 15px;
       font-size: 14px;
-    }
-
-    @media (max-width: 600px) {
-      .uni-button {
-        font-size: 15px;
-        padding: 14px 20px;
-      }
-
-      .terms-button {
-        font-size: 14px;
-        padding: 10px 16px;
-      }
     }
   </style>
 </head>
@@ -117,17 +83,15 @@
     <h1>D-TECh University Eligibility Checker</h1>
   </header>
 
-  <main>
-    <div class="button-container">
-      <button class="uni-button" onclick="location.href='uj.html'">University of Johannesburg (UJ)</button>
-      <button class="uni-button" onclick="location.href='nmmu.html'">Nelson Mandela University (NMU)</button>
-      <button class="uni-button" onclick="location.href='up.html'">University of Pretoria (UP)</button>
-      <button class="uni-button" onclick="location.href='wits.html'">University of the Witwatersrand (WITS)</button>
-      <button class="uni-button" onclick="location.href='uct.html'">University of Cape Town (UCT)</button>
-    </div>
+  <div class="button-container">
+    <button class="uni-button" onclick="location.href='uj.html'">University of Johannesburg (UJ)</button>
+    <button class="uni-button" onclick="location.href='nmmu.html'">Nelson Mandela University (NMU)</button>
+    <button class="uni-button" onclick="location.href='up.html'">University of Pretoria (UP)</button>
+    <button class="uni-button" onclick="location.href='wits.html'">University of the Witwatersrand (WITS)</button>
+    <button class="uni-button" onclick="location.href='uct.html'">University of Cape Town (UCT)</button>
 
     <button class="terms-button" onclick="location.href='terms.html'">View Terms & Conditions</button>
-  </main>
+  </div>
 
   <footer>
     &copy; 2025 D-TECh Services | Built and owned by <strong>Preasx24</strong>
