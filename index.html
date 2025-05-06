@@ -3693,118 +3693,104 @@ footer {
     <script>
   const courseSelect = document.getElementById('course');
 
-// Populate dropdown using course names
-courses.forEach(course => {
-  const opt = document.createElement('option');
-  opt.value = course.name;
-  opt.textContent = course.name;
-  courseSelect.appendChild(opt);
+courses.forEach((course, index) => {
+const opt = document.createElement('option');
+opt.value = index;
+opt.textContent = course.name;
+courseSelect.appendChild(opt);
 });
 
-// Handle course selection and generate subject inputs
 courseSelect.addEventListener('change', () => {
-  const selectedCourse = courses.find(c => c.name === courseSelect.value);
-  const container = document.getElementById('subjectsContainer');
-  container.innerHTML = '';
-  for (const subject in selectedCourse.requirements) {
-    container.innerHTML += `
-      <label>${subject} Mark:</label>
-      <input type="number" id="sub-${subject}" min="0" max="100" />
-    `;
-  }
+const selectedCourse = courses[courseSelect.value];
+const container = document.getElementById('subjectsContainer');
+container.innerHTML = '';
+for (const subject in selectedCourse.requirements) {
+container.innerHTML +=   <label>${subject} Mark:</label>   <input type="number" id="sub-${subject}" min="0" max="100" />  ;
+}
 });
-
-// Trigger initial change to populate first course
 courseSelect.dispatchEvent(new Event('change'));
 
 function checkEligibility() {
-  const selectedCourse = courses.find(c => c.name === courseSelect.value);
-  const userAPS = parseInt(document.getElementById('aps').value);
-  const results = [];
+const selectedCourse = courses[courseSelect.value];
+const userAPS = parseInt(document.getElementById('aps').value);
+const results = [];
 
-  let totalScore = 0;
-  let subjectCount = 0;
-  let anyBelowMinimum = false;
+let totalScore = 0;
+let subjectCount = 0;
+let anyBelowMinimum = false;
 
-  for (const subject in selectedCourse.requirements) {
-    const mark = parseInt(document.getElementById(`sub-${subject}`).value);
-    const required = selectedCourse.requirements[subject];
-    const diff = mark - required;
-    subjectCount++;
+for (const subject in selectedCourse.requirements) {
+const mark = parseInt(document.getElementById(sub-${subject}).value);
+const required = selectedCourse.requirements[subject];
+const diff = mark - required;
+subjectCount++;
 
-    let category = '';
-    let color = '';
+let category = '';  
+let color = '';  
 
-    if (mark >= required) {
-      if (diff <= 5) {
-        category = 'Minimum Met';
-        color = 'orange';
-      } else if (diff <= 25) {
-        category = 'Moderate Match';
-        color = 'gold';
-      } else if (diff <= 50) {
-        category = 'Strong Match';
-        color = 'lightgreen';
-      } else {
-        category = 'Very Strong Match';
-        color = 'green';
-      }
-    } else {
-      category = 'Below Requirement';
-      color = 'red';
-      anyBelowMinimum = true;
-    }
+if (mark >= required) {  
+  if (diff <= 5) {  
+    category = 'Minimum Met';  
+    color = 'orange';  
+  } else if (diff <= 25) {  
+    category = 'Moderate Match';  
+    color = 'gold';  
+  } else if (diff <= 50) {  
+    category = 'Strong Match';  
+    color = 'lightgreen';  
+  } else {  
+    category = 'Very Strong Match';  
+    color = 'green';  
+  }  
+} else {  
+  category = 'Below Requirement';  
+  color = 'red';  
+  anyBelowMinimum = true;  
+}  
 
-    totalScore += mark;
-    results.push(`<li style="color: ${color};">${subject}: ${mark}% — ${category}</li>`);
-  }
+totalScore += mark;  
+results.push(`<li style="color: ${color};">${subject}: ${mark}% — ${category}</li>`);
 
-  let apsMsg = '';
-  const apsDiff = userAPS - selectedCourse.minAPS;
-  let apsSuccess = 0;
+}
 
-  if (userAPS >= selectedCourse.minAPS) {
-    if (apsDiff <= 2) apsMsg = 'APS: Just Met';
-    else if (apsDiff <= 6) apsMsg = 'APS: Moderate';
-    else if (apsDiff <= 12) apsMsg = 'APS: Strong';
-    else apsMsg = 'APS: Very Strong';
-    apsSuccess = Math.min(apsDiff * 5 + 40, 95);
-  } else {
-    apsMsg = 'APS: Below Requirement';
-    apsSuccess = 25;
-  }
+let apsMsg = '';
+const apsDiff = userAPS - selectedCourse.minAPS;
+let apsSuccess = 0;
 
-  if (anyBelowMinimum) apsSuccess = Math.min(apsSuccess, 40);
+if (userAPS >= selectedCourse.minAPS) {
+if (apsDiff <= 2) apsMsg = 'APS: Just Met';
+else if (apsDiff <= 6) apsMsg = 'APS: Moderate';
+else if (apsDiff <= 12) apsMsg = 'APS: Strong';
+else apsMsg = 'APS: Very Strong';
+apsSuccess = Math.min(apsDiff * 5 + 40, 95);
+} else {
+apsMsg = 'APS: Below Requirement';
+apsSuccess = 25;
+}
 
-  const avgSubjectScore = totalScore / subjectCount;
-  const subjectScoreBoost = Math.min((avgSubjectScore - 50) * 0.5, 30);
-  const finalEstimate = Math.min(apsSuccess + subjectScoreBoost, 99).toFixed(1);
+if (anyBelowMinimum) apsSuccess = Math.min(apsSuccess, 40);
 
-  const resultBox = document.getElementById('resultBox');
-  resultBox.innerHTML = `
-    <h3>Results for ${selectedCourse.name}</h3>
-    <ul>${results.join('')}</ul>
-    <p><strong>${apsMsg}</strong></p>
-    <p><strong>Estimated success rate: ${finalEstimate}%</strong></p>
-  `;
+const avgSubjectScore = totalScore / subjectCount;
+const subjectScoreBoost = Math.min((avgSubjectScore - 50) * 0.5, 30);
+const finalEstimate = Math.min(apsSuccess + subjectScoreBoost, 99).toFixed(1);
+
+const resultBox = document.getElementById('resultBox');
+resultBox.innerHTML =   <h3>Results for ${selectedCourse.name}</h3>   <ul>${results.join('')}</ul>   <p><strong>${apsMsg}</strong></p>   <p><strong>Estimated success rate: ${finalEstimate}%</strong></p>  ;
 }
 
 function showJobs() {
-  const selectedCourse = courses.find(c => c.name === courseSelect.value);
-  const jobs = selectedCourse.jobs || [];
-  const jobsBox = document.getElementById('jobsBox');
+const selectedCourse = courses[courseSelect.value];
+const jobs = selectedCourse.jobs || [];
+const jobsBox = document.getElementById('jobsBox');
 
-  if (jobs.length === 0) {
-    jobsBox.innerHTML = "<p>No job information available for this course.</p>";
-    return;
-  }
+if (jobs.length === 0) {
+jobsBox.innerHTML = "<p>No job information available for this course.</p>";
+return;
+}
 
-  jobsBox.innerHTML = `
-    <h3>Possible Career Paths for ${selectedCourse.name}</h3>
-    <ul>${jobs.map(job => `<li>${job}</li>`).join('')}</ul>
-  `;
+jobsBox.innerHTML =   <h3>Possible Career Paths for ${selectedCourse.name}</h3>   <ul>${jobs.map(job =><li>${job}</li>).join('')}</ul>   ;
 }
 </script>
 
-</body>
+</body>  
 </html>
