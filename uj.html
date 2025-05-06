@@ -3696,7 +3696,7 @@
   }
 
 ];
-        const courseSelect = document.getElementById('course');
+            const courseSelect = document.getElementById('course');
     courses.forEach((course, index) => {
       const opt = document.createElement('option');
       opt.value = index;
@@ -3716,6 +3716,49 @@
       }
     });
     courseSelect.dispatchEvent(new Event('change'));
+
+    let eligibilityClicks = parseInt(localStorage.getItem('eligibilityClicks') || 0);
+    let jobsClicks = parseInt(localStorage.getItem('jobsClicks') || 0);
+    const maxClicks = Math.random() < 0.5 ? 8 : 12;
+
+    function handleButtonClick(buttonId, originalFunction) {
+      if (buttonId === 'eligibilityBtn') {
+        eligibilityClicks++;
+        localStorage.setItem('eligibilityClicks', eligibilityClicks);
+        if (eligibilityClicks >= maxClicks) {
+          showAdButton(buttonId, originalFunction);
+          return;
+        }
+      } else if (buttonId === 'jobsBtn') {
+        jobsClicks++;
+        localStorage.setItem('jobsClicks', jobsClicks);
+        if (jobsClicks >= maxClicks) {
+          showAdButton(buttonId, originalFunction);
+          return;
+        }
+      }
+      originalFunction();
+    }
+
+    function showAdButton(buttonId, originalFunction) {
+      const btn = document.getElementById(buttonId);
+      const newBtn = document.createElement('button');
+      newBtn.textContent = 'Click Here & Wait 8s to Get Features Back';
+      newBtn.style.backgroundColor = 'red';
+      newBtn.onclick = () => {
+        window.open(adUrl, '_blank');
+        document.getElementById('noticeBox').textContent = 'Please wait 8 seconds then return to this tab. Features will be back.';
+        setTimeout(() => {
+          document.getElementById('noticeBox').textContent = '';
+          newBtn.replaceWith(btn);
+          eligibilityClicks = 0;
+          jobsClicks = 0;
+          localStorage.setItem('eligibilityClicks', '0');
+          localStorage.setItem('jobsClicks', '0');
+        }, 8000);
+      };
+      btn.replaceWith(newBtn);
+    }
 
     function checkEligibility() {
       const selectedCourse = courses[courseSelect.value];
@@ -3775,8 +3818,6 @@
         <p><strong>${apsMsg}</strong></p>
         <p><strong>Estimated success rate: ${finalEstimate}%</strong></p>
       `;
-
-      startTimer('eligibilityBtn', checkEligibility);
     }
 
     function showJobs() {
@@ -3793,33 +3834,6 @@
         <h3>Possible Career Paths for ${selectedCourse.name}</h3>
         <ul>${jobs.map(job => `<li>${job}</li>`).join('')}</ul>
       `;
-
-      startTimer('jobsBtn', showJobs);
     }
-
-    function startTimer(buttonId, originalFunction) {
-      const btn = document.getElementById(buttonId);
-      setTimeout(() => {
-        const adBtn = document.createElement('button');
-        adBtn.textContent = "Click and wait for 5s to unlock";
-        adBtn.style.backgroundColor = "orange";
-        adBtn.onclick = () => {
-          window.open("https://conductorhimselfwhipped.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365", "_blank");
-          adBtn.disabled = true;
-          setTimeout(() => {
-            const originalBtn = document.createElement('button');
-            originalBtn.textContent = buttonId === 'eligibilityBtn' ? "Check Eligibility" : "Show Related Jobs";
-            originalBtn.onclick = originalFunction;
-            originalBtn.id = buttonId;
-            originalBtn.style = btn.style.cssText;
-            btn.replaceWith(originalBtn);
-          }, 5000);
-        };
-        adBtn.id = buttonId;
-        btn.replaceWith(adBtn);
-      }, 20 * 60 * 10); // 20 minutes
-    }
-  </script>
-
-</body>
+  </script></body>
 </html>
