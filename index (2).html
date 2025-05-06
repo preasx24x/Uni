@@ -98,8 +98,8 @@
 
     <div id="subjectsContainer"></div>
 
-    <button id="eligibilityBtn" onclick="checkEligibility()">Check Eligibility</button>
-    <button id="jobsBtn" onclick="showJobs()">Show Related Jobs</button>
+    <button id="eligibilityBtn" onclick="handleButtonClick('eligibilityBtn', checkEligibility)">Check Eligibility</button>
+    <button id="jobsBtn" onclick="handleButtonClick('jobsBtn', showJobs)">Show Related Jobs</button>
 
     <div class="result" id="resultBox"></div>
     <div class="result" id="jobsBox"></div>
@@ -152,6 +152,40 @@
       }
     });
     courseSelect.dispatchEvent(new Event('change'));
+
+    let clickCount = 0;
+
+    function handleButtonClick(buttonId, originalFunction) {
+      clickCount++;
+
+      if (clickCount === 2) {
+        changeButton(buttonId, originalFunction);
+      }
+
+      if (clickCount > 2) {
+        // Reset the counter if you want the process to repeat after 2 more clicks
+        clickCount = 0;
+      }
+    }
+
+    function changeButton(buttonId, originalFunction) {
+      const btn = document.getElementById(buttonId);
+      const newBtn = document.createElement('button');
+      newBtn.textContent = "You clicked twice! Wait to continue...";
+      newBtn.style.backgroundColor = "orange";
+      newBtn.disabled = true;
+
+      btn.replaceWith(newBtn);
+
+      setTimeout(() => {
+        const restoredBtn = document.createElement('button');
+        restoredBtn.textContent = buttonId === 'eligibilityBtn' ? "Check Eligibility" : "Show Related Jobs";
+        restoredBtn.onclick = originalFunction;
+        restoredBtn.id = buttonId;
+        restoredBtn.style = btn.style.cssText;
+        newBtn.replaceWith(restoredBtn);
+      }, 5000); // 5 seconds wait before restoring button
+    }
 
     function checkEligibility() {
       const selectedCourse = courses[courseSelect.value];
@@ -211,8 +245,6 @@
         <p><strong>${apsMsg}</strong></p>
         <p><strong>Estimated success rate: ${finalEstimate}%</strong></p>
       `;
-
-      startTimer('eligibilityBtn', checkEligibility);
     }
 
     function showJobs() {
@@ -229,31 +261,6 @@
         <h3>Possible Career Paths for ${selectedCourse.name}</h3>
         <ul>${jobs.map(job => `<li>${job}</li>`).join('')}</ul>
       `;
-
-      startTimer('jobsBtn', showJobs);
-    }
-
-    function startTimer(buttonId, originalFunction) {
-      const btn = document.getElementById(buttonId);
-      setTimeout(() => {
-        const adBtn = document.createElement('button');
-        adBtn.textContent = "Click and wait for 5s to unlock";
-        adBtn.style.backgroundColor = "orange";
-        adBtn.onclick = () => {
-          window.open("https://conductorhimselfwhipped.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365", "_blank");
-          adBtn.disabled = true;
-          setTimeout(() => {
-            const originalBtn = document.createElement('button');
-            originalBtn.textContent = buttonId === 'eligibilityBtn' ? "Check Eligibility" : "Show Related Jobs";
-            originalBtn.onclick = originalFunction;
-            originalBtn.id = buttonId;
-            originalBtn.style = btn.style.cssText;
-            btn.replaceWith(originalBtn);
-          }, 5000);
-        };
-        adBtn.id = buttonId;
-        btn.replaceWith(adBtn);
-      }, 20 * 60 * 1000); // 20 minutes
     }
   </script>
 
