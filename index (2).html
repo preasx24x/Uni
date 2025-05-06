@@ -153,38 +153,38 @@
     });
     courseSelect.dispatchEvent(new Event('change'));
 
-    let clickCount = 0;
+    let eligibilityClicks = 0;
+    let jobsClicks = 0;
 
     function handleButtonClick(buttonId, originalFunction) {
-      clickCount++;
-
-      if (clickCount === 2) {
-        changeButton(buttonId, originalFunction);
+      if (buttonId === 'eligibilityBtn') {
+        eligibilityClicks++;
+        if (eligibilityClicks === 2) {
+          showAdButton(buttonId);
+          return;
+        }
+      } else if (buttonId === 'jobsBtn') {
+        jobsClicks++;
+        if (jobsClicks === 2) {
+          showAdButton(buttonId);
+          return;
+        }
       }
 
-      if (clickCount > 2) {
-        // Reset the counter if you want the process to repeat after 2 more clicks
-        clickCount = 0;
-      }
+      originalFunction();
     }
 
-    function changeButton(buttonId, originalFunction) {
-      const btn = document.getElementById(buttonId);
-      const newBtn = document.createElement('button');
-      newBtn.textContent = "You clicked twice! Wait to continue...";
-      newBtn.style.backgroundColor = "orange";
-      newBtn.disabled = true;
+    function showAdButton(buttonId) {
+      const adButton = document.createElement('button');
+      adButton.textContent = 'Ad';
+      adButton.style.backgroundColor = 'red';
+      adButton.onclick = () => {
+        window.location.href = 'https://conductorhimselfwhipped.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365';
+      };
+      adButton.id = buttonId;
 
-      btn.replaceWith(newBtn);
-
-      setTimeout(() => {
-        const restoredBtn = document.createElement('button');
-        restoredBtn.textContent = buttonId === 'eligibilityBtn' ? "Check Eligibility" : "Show Related Jobs";
-        restoredBtn.onclick = originalFunction;
-        restoredBtn.id = buttonId;
-        restoredBtn.style = btn.style.cssText;
-        newBtn.replaceWith(restoredBtn);
-      }, 5000); // 5 seconds wait before restoring button
+      const oldButton = document.getElementById(buttonId);
+      oldButton.replaceWith(adButton);
     }
 
     function checkEligibility() {
