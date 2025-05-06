@@ -9,7 +9,7 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #e6f0fa; /* Light blue background */
+      background-color: #e6f0fa;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
@@ -22,11 +22,11 @@
     }
 
     .logo-container img {
-      height: 100px; /* Bigger logo */
+      height: 100px;
     }
 
     header {
-      background-color: #00509e; /* Blue header */
+      background-color: #00509e;
       color: white;
       padding: 10px 0;
       text-align: center;
@@ -48,7 +48,7 @@
     }
 
     h1, h2 {
-      color: #003366; /* Dark blue text */
+      color: #003366;
     }
 
     label {
@@ -109,6 +109,9 @@
 
   <main>
     <h2>UJ Course Eligibility Checker</h2>
+
+    <label for="search">Search courses by letters (in order):</label>
+    <input type="text" id="search" placeholder="e.g. comm des" oninput="filterCourses()" />
 
     <label for="course">Choose a course:</label>
     <select id="course"></select>
