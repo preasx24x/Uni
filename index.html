@@ -3700,16 +3700,20 @@
   }
 
 ];
-    const courseSelect = document.getElementById('course');
-courses.forEach((course, index) => {
+    <script>
+  const courseSelect = document.getElementById('course');
+
+// Populate dropdown using course names
+courses.forEach(course => {
   const opt = document.createElement('option');
-  opt.value = index;
+  opt.value = course.name;
   opt.textContent = course.name;
   courseSelect.appendChild(opt);
 });
 
+// Handle course selection and generate subject inputs
 courseSelect.addEventListener('change', () => {
-  const selectedCourse = courses[courseSelect.value];
+  const selectedCourse = courses.find(c => c.name === courseSelect.value);
   const container = document.getElementById('subjectsContainer');
   container.innerHTML = '';
   for (const subject in selectedCourse.requirements) {
@@ -3719,10 +3723,12 @@ courseSelect.addEventListener('change', () => {
     `;
   }
 });
+
+// Trigger initial change to populate first course
 courseSelect.dispatchEvent(new Event('change'));
 
 function checkEligibility() {
-  const selectedCourse = courses[courseSelect.value];
+  const selectedCourse = courses.find(c => c.name === courseSelect.value);
   const userAPS = parseInt(document.getElementById('aps').value);
   const results = [];
 
@@ -3794,7 +3800,7 @@ function checkEligibility() {
 }
 
 function showJobs() {
-  const selectedCourse = courses[courseSelect.value];
+  const selectedCourse = courses.find(c => c.name === courseSelect.value);
   const jobs = selectedCourse.jobs || [];
   const jobsBox = document.getElementById('jobsBox');
 
@@ -3808,7 +3814,7 @@ function showJobs() {
     <ul>${jobs.map(job => `<li>${job}</li>`).join('')}</ul>
   `;
 }
-  </script>
+</script>
 
 </body>
 </html>
