@@ -4,15 +4,16 @@
   <meta charset="UTF-8">
   <title>D-TECh University Eligibility Checker</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
-    }
-
-    body {
       display: flex;
       flex-direction: column;
     }
@@ -20,7 +21,7 @@
     header {
       background-color: #fff;
       text-align: center;
-      padding: 20px 10px;
+      padding: 15px 10px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
@@ -29,21 +30,16 @@
     }
 
     header h1 {
-      font-size: 22px;
+      font-size: 20px;
+      margin-top: 10px;
       color: #222;
-      margin: 10px 0 0;
     }
 
-    .button-container {
+    .main {
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .button-list {
-      display: flex;
-      flex-direction: column;
+      justify-content: center;
     }
 
     .uni-button, .terms-button {
@@ -88,14 +84,12 @@
     <h1>D-TECh University Eligibility Checker</h1>
   </header>
 
-  <div class="button-container">
-    <div class="button-list">
-      <button class="uni-button" onclick="location.href='uj.html'">University of Johannesburg (UJ)</button>
-      <button class="uni-button" onclick="location.href='nmmu.html'">Nelson Mandela University (NMU)</button>
-      <button class="uni-button" onclick="location.href='up.html'">University of Pretoria (UP)</button>
-      <button class="uni-button" onclick="location.href='wits.html'">University of the Witwatersrand (WITS)</button>
-      <button class="uni-button" onclick="location.href='uct.html'">University of Cape Town (UCT)</button>
-    </div>
+  <div class="main">
+    <button class="uni-button" onclick="location.href='uj.html'">University of Johannesburg (UJ)</button>
+    <button class="uni-button" onclick="location.href='nmmu.html'">Nelson Mandela University (NMU)</button>
+    <button class="uni-button" onclick="location.href='up.html'">University of Pretoria (UP)</button>
+    <button class="uni-button" onclick="location.href='wits.html'">University of the Witwatersrand (WITS)</button>
+    <button class="uni-button" onclick="location.href='uct.html'">University of Cape Town (UCT)</button>
     <button class="terms-button" onclick="location.href='terms.html'">View Terms & Conditions</button>
   </div>
 
