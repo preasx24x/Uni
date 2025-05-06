@@ -2,40 +2,106 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>University Selection</title>
+  <title>D-TECh University Eligibility Checker</title>
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      padding: 50px;
-      text-align: center;
+      background-color: #f5f5f5;
     }
-    .university-button {
-      display: block;
-      margin: 15px auto;
-      padding: 10px 20px;
-      font-size: 18px;
+
+    header {
+      text-align: center;
+      padding: 50px 20px;
+      background: #fff;
+    }
+
+    header img {
+      width: 250px;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 50px;
+      color: #222;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .buttons button {
+      width: 100%;
+      padding: 50px;
+      font-size: 32px;
+      font-weight: bold;
+      border: none;
+      border-radius: 15px;
       background-color: #007bff;
       color: white;
-      border: none;
-      border-radius: 8px;
       cursor: pointer;
-      width: 250px;
-      transition: background-color 0.3s;
     }
-    .university-button:hover {
+
+    .buttons button:hover {
       background-color: #0056b3;
+    }
+
+    .buttons .terms {
+      background-color: #f0f0f0;
+      color: #333;
+      font-weight: bold;
+      border-radius: 15px;
+    }
+
+    .buttons .terms:hover {
+      background-color: #ddd;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      background: #222;
+      color: #ccc;
+      font-size: 24px;
+      margin-top: 40px;
+    }
+
+    /* Responsive design for smaller screens */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 32px;
+      }
+
+      .buttons button {
+        padding: 20px;
+        font-size: 20px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>Select Your University</h1>
+  <header>
+    <img src="logo.png" alt="D-TECh Logo">
+    <h1>D-TECh University Eligibility Checker</h1>
+  </header>
 
-  <button class="university-button" onclick="location.href='uj.html'">University of Johannesburg</button>
-  <button class="university-button" onclick="location.href='nmu.html'">Nelson Mandela University</button>
-  <button class="university-button" onclick="location.href='uct.html'">University of Cape Town</button>
-  <button class="university-button" onclick="location.href='wits.html'">University of the Witwatersrand</button>
-  <button class="university-button" onclick="location.href='up.html'">University of Pretoria</button>
+  <div class="buttons">
+    <button onclick="location.href='uj.html'">University of Johannesburg (UJ)</button>
+    <button onclick="location.href='nmmu.html'">Nelson Mandela University (NMU)</button>
+    <button onclick="location.href='up.html'">University of Pretoria (UP)</button>
+    <button onclick="location.href='wits.html'">University of the Witwatersrand (WITS)</button>
+    <button onclick="location.href='uct.html'">University of Cape Town (UCT)</button>
+    <button class="terms" onclick="location.href='terms.html'">View Terms & Conditions</button>
+  </div>
+
+  <footer>
+    &copy; 2025 D-TECh Services | Built and owned by Preasx24
+  </footer>
 
 </body>
 </html>
