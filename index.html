@@ -1,134 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DTECH | UJ Course Eligibility Checker</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #e6f0fa;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+  <title>DTECH | UJ Course Eligibility Checker</title>  
+  <style>  
+    body {  
+      font-family: Arial, sans-serif;  
+      margin: 0;  
+      padding: 0;  
+      background-color: #e6f0fa; /* Light blue background */  
+      display: flex;  
+      flex-direction: column;  
+      min-height: 100vh;  
+    }  .logo-container {  
+  text-align: center;  
+  padding: 20px 0;  
+  background-color: transparent;  
+}  
 
-    .logo-container {
-      text-align: center;
-      padding: 20px 0;
-      background-color: transparent;
-    }
+.logo-container img {  
+  height: 100px; /* Bigger logo */  
+}  
 
-    .logo-container img {
-      height: 100px;
-    }
+header {  
+  background-color: #00509e; /* Blue header */  
+  color: white;  
+  padding: 10px 0;  
+  text-align: center;  
+}  
 
-    header {
-      background-color: #00509e;
-      color: white;
-      padding: 10px 0;
-      text-align: center;
-    }
+header h1 {  
+  margin: 0;  
+  font-size: 26px;  
+}  
 
-    header h1 {
-      margin: 0;
-      font-size: 26px;
-    }
+main {  
+  max-width: 800px;  
+  margin: 40px auto;  
+  padding: 20px;  
+  background-color: white;  
+  border: 1px solid #cce0f5;  
+  border-radius: 8px;  
+  flex-grow: 1;  
+}  
 
-    main {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
-      background-color: white;
-      border: 1px solid #cce0f5;
-      border-radius: 8px;
-      flex-grow: 1;
-    }
+h1, h2 {  
+  color: #003366; /* Dark blue text */  
+}  
 
-    h1, h2 {
-      color: #003366;
-    }
+label {  
+  display: block;  
+  margin-bottom: 8px;  
+  font-weight: bold;  
+  color: #003366;  
+}  
 
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-      color: #003366;
-    }
+input, select {  
+  width: 100%;  
+  padding: 10px;  
+  margin-bottom: 20px;  
+  border: 1px solid #aac8f0;  
+  border-radius: 4px;  
+  font-size: 16px;  
+}  
 
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #aac8f0;
-      border-radius: 4px;
-      font-size: 16px;
-    }
+button {  
+  background-color: #0073e6;  
+  color: white;  
+  border: none;  
+  padding: 10px 20px;  
+  font-size: 16px;  
+  cursor: pointer;  
+  border-radius: 4px;  
+  width: 100%;  
+  margin-bottom: 10px;  
+}  
 
-    button {
-      background-color: #0073e6;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 4px;
-      width: 100%;
-      margin-bottom: 10px;
-    }
+button:hover {  
+  background-color: #005bb5;  
+}  
 
-    button:hover {
-      background-color: #005bb5;
-    }
+.result {  
+  margin-top: 20px;  
+  padding: 15px;  
+  background-color: #dfefff;  
+  border: 1px solid #0073e6;  
+  border-radius: 4px;  
+}  
 
-    .result {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #dfefff;
-      border: 1px solid #0073e6;
-      border-radius: 4px;
-    }
+footer {  
+  background-color: #003366;  
+  color: white;  
+  text-align: center;  
+  padding: 10px;  
+  font-size: 14px;  
+  margin-top: auto;  
+}
 
-    footer {
-      background-color: #003366;
-      color: white;
-      text-align: center;
-      padding: 10px;
-      font-size: 14px;
-      margin-top: auto;
-    }
-  </style>
-</head>
-<body>
+  </style>  
+</head>  
+<body>    <div class="logo-container">  
+    <img src="logo.png" alt="DTECH Logo" />  
+  </div>    <main>  
+    <h2>UJ Course Eligibility Checker</h2>  <label for="course">Choose a course:</label>  
+<select id="course"></select>  
 
-  <div class="logo-container">
-    <img src="logo.png" alt="DTECH Logo" />
-  </div>
+<label for="aps">Enter your APS:</label>  
+<input type="number" id="aps" min="0" max="50" />  
 
-  <main>
-    <h2>UJ Course Eligibility Checker</h2>
+<div id="subjectsContainer"></div>  
 
-    <label for="search">Search courses by letters (in order):</label>
-    <input type="text" id="search" placeholder="e.g. comm des" oninput="filterCourses()" />
+<button onclick="checkEligibility()">Check Eligibility</button>  
+<button onclick="showJobs()">Show Related Jobs</button>  
 
-    <label for="course">Choose a course:</label>
-    <select id="course"></select>
+<div class="result" id="resultBox"></div>  
+<div class="result" id="jobsBox"></div>
 
-    <label for="aps">Enter your APS:</label>
-    <input type="number" id="aps" min="0" max="50" />
-
-    <div id="subjectsContainer"></div>
-
-    <button onclick="checkEligibility()">Check Eligibility</button>
-    <button onclick="showJobs()">Show Related Jobs</button>
-
-    <div class="result" id="resultBox"></div>
-    <div class="result" id="jobsBox"></div>
-  </main>
-
-  <footer>
+  </main>    <footer>  
+    &copy; 2025 DTECH | Developed and Owned by Preasx24. All rights reserved.  
+  </footer>  
     &copy; 2025 DTECH | Developed and Owned by Preasx24. All rights reserved.
   </footer>
 
