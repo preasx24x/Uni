@@ -1,53 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Course Eligibility Checker</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DTECH | UJ Course Eligibility Checker</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      background-color: #e6f0fa;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-    h1 {
-      color: #333;
+    .logo-container {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .logo-container img {
+      height: 100px;
+    }
+    header {
+      background-color: #00509e;
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+    }
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: white;
+      border: 1px solid #cce0f5;
+      border-radius: 8px;
+      flex-grow: 1;
     }
     label {
       display: block;
-      margin-top: 10px;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #003366;
     }
     input, select {
-      padding: 5px;
-      width: 200px;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #aac8f0;
+      border-radius: 4px;
+      font-size: 16px;
     }
     button {
-      margin-top: 15px;
-      padding: 8px 15px;
+      background-color: #0073e6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
       cursor: pointer;
+      border-radius: 4px;
+      width: 100%;
+      margin-bottom: 10px;
     }
-    #result {
+    button:hover {
+      background-color: #005bb5;
+    }
+    .result {
       margin-top: 20px;
+      padding: 15px;
+      background-color: #dfefff;
+      border: 1px solid #0073e6;
+      border-radius: 4px;
+    }
+    footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
       padding: 10px;
-      background: #fff;
-      border-left: 4px solid #007bff;
+      font-size: 14px;
+      margin-top: auto;
+    }
+    #supportBtn {
+      position: fixed;
+      top: 12px;
+      right: 0;
+      width: 25%;
+      max-width: 180px;
+      padding: 10px;
+      font-size: 14px;
+      background-color: #ff3b3f;
+      color: white;
+      border: none;
+      border-radius: 8px 0 0 8px;
+      cursor: pointer;
+      z-index: 1000;
+      text-align: center;
+      box-shadow: -2px 2px 6px rgba(0, 0, 0, 0.2);
+    }
+    #supportBtn:hover {
+      background-color: #d62c30;
+    }
+    #noticeBox {
+      text-align: center;
+      color: red;
+      margin: 15px 0;
     }
   </style>
 </head>
 <body>
+  <button id="supportBtn" onclick="window.open(adUrl, '_blank')">Support</button>
+  <div class="logo-container">
+    <img src="logo.png" alt="DTECH Logo" />
+  </div>
+  <main>
+    <h2>UJ Course Eligibility Checker</h2>
+    <div id="noticeBox"></div>
 
-  <h1>Course Eligibility Checker</h1>
+    <label for="course">Choose a course:</label>
+    <select id="course"></select>
 
-  <label for="aps">Enter your APS:</label>
-  <input type="number" id="aps" min="0" max="50" />
+    <label for="aps">Enter your APS:</label>
+    <input type="number" id="aps" min="0" max="50" />
 
-  <label for="course">Select a course:</label>
-  <select id="course"></select>
+    <div id="subjectsContainer"></div>
 
-  <button onclick="checkEligibility()">Check Eligibility</button>
+    <button id="eligibilityBtn" onclick="handleButtonClick('eligibilityBtn', checkEligibility)">Check Eligibility</button>
+    <button id="jobsBtn" onclick="handleButtonClick('jobsBtn', showJobs)">Show Related Jobs</button>
 
-  <div id="result"></div>
+    <div class="result" id="resultBox"></div>
+    <div class="result" id="jobsBox"></div>
+  </main>
+  <footer>
+    &copy; 2025 DTECH | Developed and Owned by Preasx24. All rights reserved.
+  </footer>
 
   <script>
+    const adUrl = 'https://conductorhimselfwhipped.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365';
+
     const courses = [
       {
         name: "BSc in Computer Science",
@@ -58,7 +146,7 @@
           "Physical Sciences": "5",
           "English": "4"
         },
-        jobs: ["Software Developer", "Systems Analyst", "Data Scientist"],
+        jobs: ["Software Developer", "Systems Analyst", "AI Engineer"],
         campus: "APK"
       },
       {
@@ -70,56 +158,130 @@
           "Accounting": "4",
           "English": "4"
         },
-        jobs: ["Auditor", "Accountant", "Tax Consultant"],
+        jobs: ["Accountant", "Auditor", "Tax Consultant"],
         campus: "APB"
+      },
+      {
+        name: "BA in Communication Studies",
+        code: "BA003",
+        minAPS: 28,
+        requirements: {
+          "English": "5",
+          "Any Additional Language": "4"
+        },
+        jobs: ["Journalist", "Media Planner", "Communications Officer"],
+        campus: "DFC"
       }
     ];
 
-    const courseSelect = document.getElementById("course");
-    const resultBox = document.getElementById("result");
+    const courseSelect = document.getElementById('course');
+    const resultBox = document.getElementById('resultBox');
+    const jobsBox = document.getElementById('jobsBox');
 
-    // Load courses into the dropdown
-    courses.forEach(course => {
-      const option = document.createElement("option");
-      option.value = course.code;
-      option.text = `${course.name} (${course.code})`;
-      courseSelect.appendChild(option);
+    courses.forEach((course, index) => {
+      const opt = document.createElement('option');
+      opt.value = index;
+      opt.textContent = course.name;
+      courseSelect.appendChild(opt);
     });
 
-    function checkEligibility() {
-      const aps = parseInt(document.getElementById("aps").value);
-      const selectedCode = courseSelect.value;
-      const course = courses.find(c => c.code === selectedCode);
-
-      if (!course || isNaN(aps)) {
-        resultBox.innerHTML = "<p>Please enter a valid APS and select a course.</p>";
-        return;
+    courseSelect.addEventListener('change', () => {
+      const selectedCourse = courses[courseSelect.value];
+      const container = document.getElementById('subjectsContainer');
+      container.innerHTML = '';
+      for (const subject in selectedCourse.requirements) {
+        container.innerHTML += `
+          <label>${subject} Level (1–7):</label>
+          <input type="number" id="sub-${subject}" min="1" max="7" />
+        `;
       }
+    });
+    courseSelect.dispatchEvent(new Event('change'));
 
-      let eligible = aps >= course.minAPS;
+    let eligibilityClicks = parseInt(localStorage.getItem('eligibilityClicks') || 0);
+    let jobsClicks = parseInt(localStorage.getItem('jobsClicks') || 0);
+    const maxClicks = Math.random() < 0.5 ? 8 : 12;
+
+    function handleButtonClick(buttonId, originalFunction) {
+      if (buttonId === 'eligibilityBtn') {
+        eligibilityClicks++;
+        localStorage.setItem('eligibilityClicks', eligibilityClicks);
+        if (eligibilityClicks >= maxClicks) {
+          showAdButton(buttonId, originalFunction);
+          return;
+        }
+      } else if (buttonId === 'jobsBtn') {
+        jobsClicks++;
+        localStorage.setItem('jobsClicks', jobsClicks);
+        if (jobsClicks >= maxClicks) {
+          showAdButton(buttonId, originalFunction);
+          return;
+        }
+      }
+      originalFunction();
+    }
+
+    function showAdButton(buttonId, originalFunction) {
+      const btn = document.getElementById(buttonId);
+      const newBtn = document.createElement('button');
+      newBtn.textContent = 'Click Here & Wait 8s to Get Features Back';
+      newBtn.style.backgroundColor = 'red';
+      newBtn.onclick = () => {
+        window.open(adUrl, '_blank');
+        document.getElementById('noticeBox').textContent = 'Please wait 8 seconds then return to this tab. Features will be back.';
+        setTimeout(() => {
+          document.getElementById('noticeBox').textContent = '';
+          newBtn.replaceWith(btn);
+          eligibilityClicks = 0;
+          jobsClicks = 0;
+          localStorage.setItem('eligibilityClicks', '0');
+          localStorage.setItem('jobsClicks', '0');
+        }, 8000);
+      };
+      btn.replaceWith(newBtn);
+    }
+
+    function checkEligibility() {
+      const selectedCourse = courses[courseSelect.value];
+      const userAPS = parseInt(document.getElementById('aps').value);
+      const requirements = selectedCourse.requirements;
+      let meetsAll = true;
       let messages = [];
 
-      messages.push(`<strong>Course:</strong> ${course.name}`);
-      messages.push(`<strong>Campus:</strong> ${course.campus}`);
-      messages.push(`<strong>Minimum APS:</strong> ${course.minAPS}`);
-      messages.push(`<strong>Your APS:</strong> ${aps}`);
-      messages.push(`<strong>Career Opportunities:</strong> ${course.jobs.join(", ")}`);
+      for (const subject in requirements) {
+        const input = document.getElementById(`sub-${subject}`);
+        const required = requirements[subject];
+        const entered = parseInt(input.value);
 
-      messages.push("<strong>Subject Requirements:</strong><ul>");
-      for (const [subject, mark] of Object.entries(course.requirements)) {
-        messages.push(`<li>${subject}: ${mark}</li>`);
+        if (required.includes("or")) {
+          const options = required.split(" or ").map(x => parseInt(x));
+          if (!options.includes(entered)) {
+            meetsAll = false;
+            messages.push(`${subject}: Required level ${required}, you entered ${entered}`);
+          }
+        } else {
+          const requiredLevel = parseInt(required);
+          if (entered < requiredLevel) {
+            meetsAll = false;
+            messages.push(`${subject}: Required level ${required}, you entered ${entered}`);
+          }
+        }
       }
-      messages.push("</ul>");
 
-      if (eligible) {
-        messages.unshift("<p style='color: green; font-weight: bold;'>You meet the minimum APS for this course!</p>");
-      } else {
-        messages.unshift("<p style='color: red; font-weight: bold;'>Your APS is too low for this course.</p>");
+      if (userAPS < selectedCourse.minAPS) {
+        meetsAll = false;
+        messages.push(`Minimum APS: ${selectedCourse.minAPS}, you entered ${userAPS}`);
       }
 
-      resultBox.innerHTML = messages.join("<br>");
+      resultBox.innerHTML = meetsAll
+        ? `<strong>Eligible:</strong> You meet the requirements for ${selectedCourse.name}.`
+        : `<strong>Not Eligible:</strong><br>${messages.join("<br>")}`;
+    }
+
+    function showJobs() {
+      const selectedCourse = courses[courseSelect.value];
+      jobsBox.innerHTML = `<strong>Career Opportunities:</strong><ul>${selectedCourse.jobs.map(job => `<li>${job}</li>`).join("")}</ul>`;
     }
   </script>
-
 </body>
 </html>
