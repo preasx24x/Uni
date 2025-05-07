@@ -1,829 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DTECH | UJ Course Eligibility Checker</title>
+  <meta charset="UTF-8">
+  <title>Course Eligibility Checker</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #e6f0fa;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    .logo-container {
-      text-align: center;
-      padding: 20px 0;
-    }
-    .logo-container img {
-      height: 100px;
-    }
-    header {
-      background-color: #00509e;
-      color: white;
-      padding: 10px 0;
-      text-align: center;
-    }
-    main {
-      max-width: 800px;
-      margin: 40px auto;
       padding: 20px;
-      background-color: white;
-      border: 1px solid #cce0f5;
-      border-radius: 8px;
-      flex-grow: 1;
+      background: #f2f2f2;
+    }
+    h1 {
+      color: #333;
     }
     label {
       display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-      color: #003366;
+      margin-top: 10px;
     }
     input, select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #aac8f0;
-      border-radius: 4px;
-      font-size: 16px;
+      padding: 5px;
+      width: 200px;
     }
     button {
-      background-color: #0073e6;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
+      margin-top: 15px;
+      padding: 8px 15px;
       cursor: pointer;
-      border-radius: 4px;
-      width: 100%;
-      margin-bottom: 10px;
     }
-    button:hover {
-      background-color: #005bb5;
-    }
-    .result {
+    #result {
       margin-top: 20px;
-      padding: 15px;
-      background-color: #dfefff;
-      border: 1px solid #0073e6;
-      border-radius: 4px;
-    }
-    footer {
-      background-color: #003366;
-      color: white;
-      text-align: center;
       padding: 10px;
-      font-size: 14px;
-      margin-top: auto;
-    }
-    #supportBtn {
-      position: fixed;
-      top: 12px;
-      right: 0;
-      width: 25%;
-      max-width: 180px;
-      padding: 10px;
-      font-size: 14px;
-      background-color: #ff3b3f;
-      color: white;
-      border: none;
-      border-radius: 8px 0 0 8px;
-      cursor: pointer;
-      z-index: 1000;
-      text-align: center;
-      box-shadow: -2px 2px 6px rgba(0, 0, 0, 0.2);
-    }
-    #supportBtn:hover {
-      background-color: #d62c30;
-    }
-    #noticeBox {
-      text-align: center;
-      color: red;
-      margin: 15px 0;
+      background: #fff;
+      border-left: 4px solid #007bff;
     }
   </style>
 </head>
 <body>
-  <button id="supportBtn" onclick="window.open(adUrl, '_blank')">Support</button>
-  <div class="logo-container">
-    <img src="logo.png" alt="DTECH Logo" />
-  </div>
-  <main>
-    <h2>UJ Course Eligibility Checker</h2>
-    <div id="noticeBox"></div>
 
-    <label for="course">Choose a course:</label>
-    <select id="course"></select>
+  <h1>Course Eligibility Checker</h1>
 
-    <label for="aps">Enter your APS:</label>
-    <input type="number" id="aps" min="0" max="50" />
+  <label for="aps">Enter your APS:</label>
+  <input type="number" id="aps" min="0" max="50" />
 
-    <div id="subjectsContainer"></div>
+  <label for="course">Select a course:</label>
+  <select id="course"></select>
 
-    <button id="eligibilityBtn" onclick="handleButtonClick('eligibilityBtn', checkEligibility)">Check Eligibility</button>
-    <button id="jobsBtn" onclick="handleButtonClick('jobsBtn', showJobs)">Show Related Jobs</button>
+  <button onclick="checkEligibility()">Check Eligibility</button>
 
-    <div class="result" id="resultBox"></div>
-    <div class="result" id="jobsBox"></div>
-  </main>
-  <footer>
-    &copy; 2025 DTECH | Developed and Owned by Preasx24. All rights reserved.
-  </footer>
+  <div id="result"></div>
 
   <script>
-    const adUrl = 'https://conductorhimselfwhipped.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365';
-
     const courses = [
-{
-    "name": "BSc in Physical & Mineral Sciences",
-    "code": "",
-    "minAPS": 26,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 5,
-      "Physical Sciences": 5
-    },
-    "jobs": [
-      "Physicist",
-      "Chemical Industry",
-      "Analytical & Production Laboratories",
-      "Consultant",
-      "Industrial Process Manager",
-      "Metallurgist"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "BSc in Physical & Mineral Sciences (Extended Curriculum Programme)",
-    "code": "",
-    "minAPS": 22,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 4,
-      "Physical Sciences": 4,
-      "Life Sciences": 3
-    },
-    "jobs": [
-      "Physicist",
-      "Chemical Industry",
-      "Analytical & Production Laboratories",
-      "Consultant",
-      "Industrial Process Manager",
-      "Metallurgist"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "BSc in Geology",
-    "code": "",
-    "minAPS": 26,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 5,
-      "Physical Sciences": 5
-    },
-    "jobs": [
-      "Geologist",
-      "Environmental Scientist",
-      "Earth Scientist",
-      "Hydrologist",
-      "Mining Specialist",
-      "Regional Planning and Development",
-      "Mineralogist",
-      "Palaeontologist",
-      "Geophysicist",
-      "Geochemist"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Accountancy (BAcc)",
-    "code": "",
-    "minAPS": 30,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 4
-    },
-    "jobs": [
-      "Management Accountant",
-      "Internal Auditor",
-      "Tax Consultant",
-      "Business Entrepreneur",
-      "Accountant"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Commerce in Accountancy (BCom Accountancy)",
-    "code": "",
-    "minAPS": 28,
-    "requirements": {
-      "English": 3,
-      "Mathematics": 4
-    },
-    "jobs": [
-      "Internal Auditor",
-      "Consultant",
-      "Business Entrepreneur",
-      "Accountant"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Commerce in Accountancy (Extended Curriculum Programme)",
-    "code": "",
-    "minAPS": 26,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 4
-    },
-    "jobs": [
-      "Internal Auditor",
-      "Consultant",
-      "Business Entrepreneur",
-      "Accountant"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Commerce in Economics (BCom Economics)",
-    "code": "",
-    "minAPS": 26,
-    "requirements": {
-      "English": 4,
-      "Mathematics/Economics": 3
-    },
-    "jobs": [
-      "Economist",
-      "Consultant",
-      "Business Entrepreneur"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Commerce in Economics (Extended Curriculum Programme)",
-    "code": "",
-    "minAPS": 22,
-    "requirements": {
-      "English": 4,
-      "Mathematics/Economics": 3,
-      "Additional Subject": 4
-    },
-    "jobs": [
-      "Economist",
-      "Consultant",
-      "Business Entrepreneur"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Administration (BAdmin)",
-    "code": "",
-    "minAPS": 26,
-    "requirements": {
-      "English": 3
-    },
-    "jobs": [
-      "Local Government Practitioner",
-      "Public Relations Practitioner",
-      "Consultant"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Administration in Local Government",
-    "code": "",
-    "minAPS": 26,
-    "requirements": {
-      "English": 3
-    },
-    "jobs": [
-      "Project Manager",
-      "Local Government Officer",
-      "Consultant"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Development in Planning and Management (BDev)",
-    "code": "",
-    "minAPS": 26,
-    "requirements": {
-      "English": 3,
-      "Mathematics": 3,
-      "Additional Subject": 4
-    },
-    "jobs": [
-      "Development & Environmental Manager",
-      "Facilitator",
-      "Planner",
-      "Development Project Designer"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Laws (LLB)",
-    "code": "",
-    "minAPS": 30,
-    "requirements": {
-      "English": 5
-    },
-    "jobs": [
-      "Judge",
-      "Magistrate",
-      "Advocate",
-      "Attorney",
-      "Director of Public Prosecution",
-      "Registrar/Master of the High Court",
-      "Legal Advisor",
-      "Legal Administrative Officer",
-      "Labour Consultant",
-      "Commissioner"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Laws (LLB) (Extended Curriculum Programme)",
-    "code": "",
-    "minAPS": 26,
-    "requirements": {
-      "English": 5
-    },
-    "jobs": [
-      "Judge",
-      "Magistrate",
-      "Advocate",
-      "Attorney",
-      "Director of Public Prosecution",
-      "Registrar/Master of the High Court",
-      "Legal Advisor",
-      "Legal Administrative Officer",
-      "Labour Consultant",
-      "Commissioner"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Agricultural Management (BAgricMan)",
-    "code": "",
-    "minAPS": 24,
-    "requirements": {
-      "English": 3,
-      "Mathematics": 3,
-      "Physical Sciences": 4,
-      "Life Sciences": 4
-    },
-    "jobs": [
-      "Agricultural Extension Officer",
-      "Agricultural Officer",
-      "Farm Manager",
-      "Agriculture Technician",
-      "Research Assistant"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "BSc Agriculture (Agricultural Economics)",
-    "code": "",
-    "minAPS": 24,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 4,
-      "Physical Sciences": 4
-    },
-    "jobs": [
-      "Agricultural Economist",
-      "Agri-Business Manager",
-      "Agricultural Policy Analyst",
-      "Farm Manager",
-      "Consultant"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "BSc Agriculture (Plant Production)",
-    "code": "",
-    "minAPS": 24,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 4,
-      "Physical Sciences": 4,
-      "Life Sciences": 4
-    },
-    "jobs": [
-      "Agronomist",
-      "Plant Breeder",
-      "Farm Manager",
-      "Consultant"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "BSc Agriculture (Animal Production)",
-    "code": "",
-    "minAPS": 24,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 4,
-      "Physical Sciences": 4,
-      "Life Sciences": 4
-    },
-    "jobs": [
-      "Marketing Officer (Livestock Products)",
-      "Livestock Scientist",
-      "Animal Breeder & Nutritionist",
-      "Farm Manager",
-      "Consultant"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "BSc Agriculture (Soil Science)",
-    "code": "",
-    "minAPS": 25,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 4,
-      "Physical Sciences": 5,
-      "Life Sciences": 4
-    },
-    "jobs": [
-      "Soil Scientist",
-      "Laboratory Manager",
-      "Soil Analyst"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "BSc Environmental & Resource Studies",
-    "code": "",
-    "minAPS": 24,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 4,
-      "Physical Sciences": 4,
-      "Life Sciences": 4
-    },
-    "jobs": [
-      "Environmental Officer",
-      "Development Planner",
-      "Cartographer"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "BSc Water & Sanitation Sciences",
-    "code": "",
-    "minAPS": 24,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 5,
-      "Physical Sciences": 5,
-      "Life Sciences": 4
-    },
-    "jobs": [
-      "Water & Sanitation Scientist",
-      "Community Water Supply Project Planner",
-      "Community Sanitation Project Manager",
-      "Water Catchment Manager",
-      "Water Resources Planner",
-      "Water Treatment Plant Manager",
-      "Wastewater Treatment Manager"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "BSc Mathematical & Computer Sciences",
-    "code": "",
-    "minAPS": 24,
-    "requirements": {
-      "English": 3,
-      "Mathematics": 5
-    },
-    "jobs": [
-      "Systems Analyst",
-      "Computer Programmer",
-      "Network Specialist",
-      "Project Manager",
-      "Logistics Specialist",
-      "Financial Analyst",
-      "Insurance Underwriter"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "BSc Mathematical Sciences (Extended Curriculum Programme)",
-    "code": "",
-    "minAPS": 22,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 4
-    },
-    "jobs": [
-      "Systems Analyst",
-      "Computer Consultant",
-      "Computer Programmer",
-      "Computer Modelling Consultant",
-      "Aerospace Engineer",
-      "Network Specialist",
-      "Statistician"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "BSc Molecular & Life Sciences",
-    "code": "",
-    "minAPS": 26,
-    "requirements": {
-      "English": 3,
-      "Mathematics": 5,
-      "Physical Sciences": 5,
-      "Life Sciences": 4
-    },
-    "jobs": [
-      "Biotechnologist",
-      "Bio-informatics Specialist",
-      "Environmental Health & Occupational Hygienist",
-      "Environmental Manager",
-      "Industrial Biochemist",
-      "Industrial Microbiologist",
-      "Entomologist"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "BSc Life Sciences (Extended Curriculum Programme)",
-    "code": "",
-    "minAPS": 22,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 4,
-      "Physical Sciences": 4,
-      "Life Sciences": 3
-    },
-    "jobs": [
-      "Biotechnologist",
-      "Bio-informatics Specialist",
-      "Environmental Health & Occupational Hygienist",
-      "Environmental Manager",
-      "Industrial Biochemist",
-      "Industrial Microbiologist",
-      "Entomologist"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "MBChB (Medicine & Surgery)",
-    "code": "MBChB",
-    "minAPS": 27,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 5,
-      "Physical Sciences": 5,
-      "Life Sciences": 5,
-      "Additional Subject 1": 4,
-      "Additional Subject 2": 4
-    },
-    "jobs": [
-      "General Medical Practitioner",
-      "Medical Researcher"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "BSc Dietetics",
-    "code": "",
-    "minAPS": 26,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 4,
-      "Physical Sciences": 5,
-      "Life Sciences": 5,
-      "Additional Subject 1": 4,
-      "Additional Subject 2": 4
-    },
-    "jobs": [
-      "Hospital Dietician",
-      "Community Dietician",
-      "Food Service Manager",
-      "Consultant (Food Production)",
-      "Medical Representative (Nutrition)",
-      "Private Practice/Researcher"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "BOptom (Optometry)",
-    "code": "",
-    "minAPS": 27,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 5,
-      "Physical Sciences": 5,
-      "Life Sciences": 5,
-      "Additional Subject 1": 4,
-      "Additional Subject 2": 4
-    },
-    "jobs": [
-      "Optometrist (Private/Public)",
-      "Vision Scientist"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "BSc Medical Sciences",
-    "code": "",
-    "minAPS": 26,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 4,
-      "Physical Sciences": 5,
-      "Life Sciences": 5,
-      "Additional Subject 1": 4,
-      "Additional Subject 2": 4
-    },
-    "jobs": [
-      "Medical Scientist",
-      "Laboratory Researcher"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Nursing (BNurs)",
-    "code": "",
-    "minAPS": 26,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 4,
-      "Physical Sciences": 5,
-      "Life Sciences": 5,
-      "Additional Subject 1": 4,
-      "Additional Subject 2": 4
-    },
-    "jobs": [
-      "General Nurse",
-      "Psychiatric Nurse",
-      "Community Nurse",
-      "Mid-Wife",
-      "Occupational Health Nurse",
-      "Old Age Home Nurse",
-      "Home-Based Care Nurse",
-      "Hospital Nurse",
-      "Pharmaceutical Sales",
-      "Insurance/Medical Aid Consultant"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Pharmacy (BPharm)",
-    "code": "",
-    "minAPS": 27,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 5,
-      "Physical Sciences": 5,
-      "Life Sciences": 5,
-      "Additional Subject 1": 4,
-      "Additional Subject 2": 4
-    },
-    "jobs": [
-      "Retail Pharmacist",
-      "Medicine Control Officer",
-      "Government Health Officer",
-      "Industrial Pharmacist",
-      "Private Practice Pharmacist"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Commerce in Human Resource Management (Extended Curriculum Programme)",
-    "code": "",
-    "minAPS": 22,
-    "requirements": {
-      "English": 4,
-      "Mathematics": 3
-    },
-    "jobs": [
-      "Marketing Officer",
-      "Human Resource Practitioner",
-      "Purchasing Officer",
-      "Business Entrepreneur"
-    ],
-    "campus": "Turfloop"
-  }
-];
-
-    const courseSelect = document.getElementById('course');
-    const resultBox = document.getElementById('resultBox');
-    const jobsBox = document.getElementById('jobsBox');
-
-    courses.forEach((course, index) => {
-      const opt = document.createElement('option');
-      opt.value = index;
-      opt.textContent = course.name;
-      courseSelect.appendChild(opt);
-    });
-
-    courseSelect.addEventListener('change', () => {
-      const selectedCourse = courses[courseSelect.value];
-      const container = document.getElementById('subjectsContainer');
-      container.innerHTML = '';
-      for (const subject in selectedCourse.requirements) {
-        container.innerHTML += `
-          <label>${subject} Level (1–7):</label>
-          <input type="number" id="sub-${subject}" min="1" max="7" />
-        `;
+      {
+        name: "BSc in Computer Science",
+        code: "BSC001",
+        minAPS: 33,
+        requirements: {
+          "Mathematics": "5",
+          "Physical Sciences": "5",
+          "English": "4"
+        },
+        jobs: ["Software Developer", "Systems Analyst", "Data Scientist"],
+        campus: "APK"
+      },
+      {
+        name: "BCom in Accounting",
+        code: "BCOM002",
+        minAPS: 30,
+        requirements: {
+          "Mathematics": "4",
+          "Accounting": "4",
+          "English": "4"
+        },
+        jobs: ["Auditor", "Accountant", "Tax Consultant"],
+        campus: "APB"
       }
+    ];
+
+    const courseSelect = document.getElementById("course");
+    const resultBox = document.getElementById("result");
+
+    // Load courses into the dropdown
+    courses.forEach(course => {
+      const option = document.createElement("option");
+      option.value = course.code;
+      option.text = `${course.name} (${course.code})`;
+      courseSelect.appendChild(option);
     });
-    courseSelect.dispatchEvent(new Event('change'));
-
-    let eligibilityClicks = parseInt(localStorage.getItem('eligibilityClicks') || 0);
-    let jobsClicks = parseInt(localStorage.getItem('jobsClicks') || 0);
-    const maxClicks = Math.random() < 0.5 ? 8 : 12;
-
-    function handleButtonClick(buttonId, originalFunction) {
-      if (buttonId === 'eligibilityBtn') {
-        eligibilityClicks++;
-        localStorage.setItem('eligibilityClicks', eligibilityClicks);
-        if (eligibilityClicks >= maxClicks) {
-          showAdButton(buttonId, originalFunction);
-          return;
-        }
-      } else if (buttonId === 'jobsBtn') {
-        jobsClicks++;
-        localStorage.setItem('jobsClicks', jobsClicks);
-        if (jobsClicks >= maxClicks) {
-          showAdButton(buttonId, originalFunction);
-          return;
-        }
-      }
-      originalFunction();
-    }
-
-    function showAdButton(buttonId, originalFunction) {
-      const btn = document.getElementById(buttonId);
-      const newBtn = document.createElement('button');
-      newBtn.textContent = 'Click Here & Wait 8s to Get Features Back';
-      newBtn.style.backgroundColor = 'red';
-      newBtn.onclick = () => {
-        window.open(adUrl, '_blank');
-        document.getElementById('noticeBox').textContent = 'Please wait 8 seconds then return to this tab. Features will be back.';
-        setTimeout(() => {
-          document.getElementById('noticeBox').textContent = '';
-          newBtn.replaceWith(btn);
-          eligibilityClicks = 0;
-          jobsClicks = 0;
-          localStorage.setItem('eligibilityClicks', '0');
-          localStorage.setItem('jobsClicks', '0');
-        }, 8000);
-      };
-      btn.replaceWith(newBtn);
-    }
 
     function checkEligibility() {
-      const selectedCourse = courses[courseSelect.value];
-      const userAPS = parseInt(document.getElementById('aps').value);
-      const requirements = selectedCourse.requirements;
-      let meetsAll = true;
+      const aps = parseInt(document.getElementById("aps").value);
+      const selectedCode = courseSelect.value;
+      const course = courses.find(c => c.code === selectedCode);
+
+      if (!course || isNaN(aps)) {
+        resultBox.innerHTML = "<p>Please enter a valid APS and select a course.</p>";
+        return;
+      }
+
+      let eligible = aps >= course.minAPS;
       let messages = [];
 
-      for (const subject in requirements) {
-        const input = document.getElementById(`sub-${subject}`);
-        const required = requirements[subject];
-        const entered = parseInt(input.value);
+      messages.push(`<strong>Course:</strong> ${course.name}`);
+      messages.push(`<strong>Campus:</strong> ${course.campus}`);
+      messages.push(`<strong>Minimum APS:</strong> ${course.minAPS}`);
+      messages.push(`<strong>Your APS:</strong> ${aps}`);
+      messages.push(`<strong>Career Opportunities:</strong> ${course.jobs.join(", ")}`);
 
-        if (required.includes("or")) {
-          const options = required.split(" or ").map(x => parseInt(x));
-          if (!options.includes(entered)) {
-            meetsAll = false;
-            messages.push(`${subject}: Required level ${required}, you entered ${entered}`);
-          }
-        } else {
-          const requiredLevel = parseInt(required);
-          if (entered < requiredLevel) {
-            meetsAll = false;
-            messages.push(`${subject}: Required level ${required}, you entered ${entered}`);
-          }
-        }
+      messages.push("<strong>Subject Requirements:</strong><ul>");
+      for (const [subject, mark] of Object.entries(course.requirements)) {
+        messages.push(`<li>${subject}: ${mark}</li>`);
+      }
+      messages.push("</ul>");
+
+      if (eligible) {
+        messages.unshift("<p style='color: green; font-weight: bold;'>You meet the minimum APS for this course!</p>");
+      } else {
+        messages.unshift("<p style='color: red; font-weight: bold;'>Your APS is too low for this course.</p>");
       }
 
-      if (userAPS < selectedCourse.minAPS) {
-        meetsAll = false;
-        messages.push(`Minimum APS: ${selectedCourse.minAPS}, you entered ${userAPS}`);
-      }
-
-      resultBox.innerHTML = meetsAll
-        ? `<strong>Eligible:</strong> You meet the requirements for ${selectedCourse.name}.`
-        : `<strong>Not Eligible:</strong><br>${messages.join("<br>")}`;
-    }
-
-    function showJobs() {
-      const selectedCourse = courses[courseSelect.value];
-      jobsBox.innerHTML = `<strong>Career Opportunities:</strong><ul>${selectedCourse.jobs.map(job => `<li>${job}</li>`).join("")}</ul>`;
+      resultBox.innerHTML = messages.join("<br>");
     }
   </script>
+
 </body>
 </html>
