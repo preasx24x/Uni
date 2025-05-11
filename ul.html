@@ -136,272 +136,274 @@
     &copy; 2025 DTECH | Developed and Owned by Preasx24. All rights reserved.
   </footer>
 
+  <!-- Put this just before </body> -->
   <script>
     const adUrl = 'https://cafewarriors.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365';
 
     const courses = [
-  {
-    "name": "Bachelor of Medicine and Bachelor of Surgery (MBChB)",
-    "code": "MBCHB01",
-    "minAPS": 34,
-    "requirements": {
-      "English": 60,
-      "Mathematics": 60,
-      "Physical Sciences": 60,
-      "Life Sciences": 60
-    },
-    "jobs": [
-      "Medical Doctor",
-      "General Practitioner",
-      "Specialist",
-      "Surgeon",
-      "Medical Researcher"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Nursing Science (BNurs)",
-    "code": "BNURS01",
-    "minAPS": 30,
-    "requirements": {
-      "English": 50,
-      "Mathematics": 50,
-      "Life Sciences": 50
-    },
-    "jobs": [
-      "Professional Nurse",
-      "Midwife",
-      "Community Health Nurse",
-      "Nurse Educator"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Pharmacy (BPharm)",
-    "code": "BPHARM01",
-    "minAPS": 30,
-    "requirements": {
-      "English": 60,
-      "Mathematics": 60,
-      "Physical Sciences": 60
-    },
-    "jobs": [
-      "Pharmacist",
-      "Clinical Pharmacist",
-      "Pharmaceutical Researcher",
-      "Regulatory Affairs Specialist"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Optometry (BOptom)",
-    "code": "BOPTOM01",
-    "minAPS": 30,
-    "requirements": {
-      "English": 60,
-      "Mathematics": 60,
-      "Physical Sciences": 60
-    },
-    "jobs": [
-      "Optometrist",
-      "Vision Therapist",
-      "Optical Consultant"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Dietetics (BDietetics)",
-    "code": "BDIET01",
-    "minAPS": 30,
-    "requirements": {
-      "English": 60,
-      "Mathematics": 60,
-      "Physical Sciences": 60,
-      "Life Sciences": 60
-    },
-    "jobs": [
-      "Dietitian",
-      "Nutritionist",
-      "Public Health Nutritionist",
-      "Clinical Dietitian"
-    ],
-    "campus": "Turfloop"
-  },
-  {
-    "name": "Bachelor of Public Health (BPH)",
-    "code": "BPH01",
-    "minAPS": 28,
-    "requirements": {
-      "English": 50,
-      "Mathematics": 50,
-      "Life Sciences": 50
-    },
-    "jobs": [
-      "Public Health Practitioner",
-      "Health Promotion Officer",
-      "Epidemiologist",
-      "Health Policy Analyst"
-    ],
-    "campus": "Turfloop"
-  }
-];
+      {
+        "name": "Bachelor of Medicine and Bachelor of Surgery (MBChB)",
+        "code": "MBCHB01",
+        "minAPS": 34,
+        "requirements": {
+          "English": 60,
+          "Mathematics": 60,
+          "Physical Sciences": 60,
+          "Life Sciences": 60
+        },
+        "jobs": [
+          "Medical Doctor",
+          "General Practitioner",
+          "Specialist",
+          "Surgeon",
+          "Medical Researcher"
+        ],
+        "campus": "Turfloop"
+      },
+      {
+        "name": "Bachelor of Nursing Science (BNurs)",
+        "code": "BNURS01",
+        "minAPS": 30,
+        "requirements": {
+          "English": 50,
+          "Mathematics": 50,
+          "Life Sciences": 50
+        },
+        "jobs": [
+          "Professional Nurse",
+          "Midwife",
+          "Community Health Nurse",
+          "Nurse Educator"
+        ],
+        "campus": "Turfloop"
+      },
+      {
+        "name": "Bachelor of Pharmacy (BPharm)",
+        "code": "BPHARM01",
+        "minAPS": 30,
+        "requirements": {
+          "English": 60,
+          "Mathematics": 60,
+          "Physical Sciences": 60
+        },
+        "jobs": [
+          "Pharmacist",
+          "Clinical Pharmacist",
+          "Pharmaceutical Researcher",
+          "Regulatory Affairs Specialist"
+        ],
+        "campus": "Turfloop"
+      },
+      {
+        "name": "Bachelor of Optometry (BOptom)",
+        "code": "BOPTOM01",
+        "minAPS": 30,
+        "requirements": {
+          "English": 60,
+          "Mathematics": 60,
+          "Physical Sciences": 60
+        },
+        "jobs": [
+          "Optometrist",
+          "Vision Therapist",
+          "Optical Consultant"
+        ],
+        "campus": "Turfloop"
+      },
+      {
+        "name": "Bachelor of Dietetics (BDietetics)",
+        "code": "BDIET01",
+        "minAPS": 30,
+        "requirements": {
+          "English": 60,
+          "Mathematics": 60,
+          "Physical Sciences": 60,
+          "Life Sciences": 60
+        },
+        "jobs": [
+          "Dietitian",
+          "Nutritionist",
+          "Public Health Nutritionist",
+          "Clinical Dietitian"
+        ],
+        "campus": "Turfloop"
+      },
+      {
+        "name": "Bachelor of Public Health (BPH)",
+        "code": "BPH01",
+        "minAPS": 28,
+        "requirements": {
+          "English": 50,
+          "Mathematics": 50,
+          "Life Sciences": 50
+        },
+        "jobs": [
+          "Public Health Practitioner",
+          "Health Promotion Officer",
+          "Epidemiologist",
+          "Health Policy Analyst"
+        ],
+        "campus": "Turfloop"
+      }
+    ];
 
-    <script>
-const searchInput = document.getElementById('search');
-const courseSelect = document.getElementById('course');
+    // grab references
+    const searchInput = document.getElementById('search');
+    const courseSelect = document.getElementById('course');
+    const subjectsContainer = document.getElementById('subjectsContainer');
+    const resultBox = document.getElementById('resultBox');
+    const jobsBox = document.getElementById('jobsBox');
+    const noticeBox = document.getElementById('noticeBox');
 
-searchInput.addEventListener('input', () => {
-  const searchTerm = searchInput.value.toLowerCase();
-  courseSelect.innerHTML = '';
-  courses.forEach((course, index) => {
-    if (course.name.toLowerCase().includes(searchTerm)) {
-      const opt = document.createElement('option');
-      opt.value = index;
-      opt.textContent = course.name;
-      courseSelect.appendChild(opt);
-    }
-  });
-  courseSelect.dispatchEvent(new Event('change'));
-});
-
-courses.forEach((course, index) => {
-  const opt = document.createElement('option');
-  opt.value = index;
-  opt.textContent = course.name;
-  courseSelect.appendChild(opt);
-});
-
-courseSelect.addEventListener('change', () => {
-  const selectedCourse = courses[courseSelect.value];
-  const container = document.getElementById('subjectsContainer');
-  container.innerHTML = '';
-  for (const subject in selectedCourse.requirements) {
-    container.innerHTML += `
-      <label>${subject} Mark:</label>
-      <input type="number" id="sub-${subject}" min="0" max="100" />
-    `;
-  }
-});
-courseSelect.dispatchEvent(new Event('change'));
-
-let eligibilityClicks = parseInt(localStorage.getItem('eligibilityClicks') || 0);
-let jobsClicks = parseInt(localStorage.getItem('jobsClicks') || 0);
-const maxClicks = Math.random() < 0.5 ? 8 : 12;
-
-function handleButtonClick(buttonId, originalFunction) {
-  if (buttonId === 'eligibilityBtn') {
-    eligibilityClicks++;
-    localStorage.setItem('eligibilityClicks', eligibilityClicks);
-    if (eligibilityClicks >= maxClicks) {
-      showAdButton(buttonId, originalFunction);
-      return;
-    }
-  } else if (buttonId === 'jobsBtn') {
-    jobsClicks++;
-    localStorage.setItem('jobsClicks', jobsClicks);
-    if (jobsClicks >= maxClicks) {
-      showAdButton(buttonId, originalFunction);
-      return;
-    }
-  }
-  originalFunction();
-}
-
-function showAdButton(buttonId, originalFunction) {
-  const btn = document.getElementById(buttonId);
-  const newBtn = document.createElement('button');
-  newBtn.textContent = 'Click Here & Wait 8s to Get Features Back';
-  newBtn.style.backgroundColor = 'red';
-  newBtn.onclick = () => {
-    window.open(adUrl, '_blank');
-    document.getElementById('noticeBox').textContent = 'Please wait 8 seconds then return to this tab. Features will be back.';
-    setTimeout(() => {
-      document.getElementById('noticeBox').textContent = '';
-      newBtn.replaceWith(btn);
-      eligibilityClicks = 0;
-      jobsClicks = 0;
-      localStorage.setItem('eligibilityClicks', '0');
-      localStorage.setItem('jobsClicks', '0');
-    }, 8000);
-  };
-  btn.replaceWith(newBtn);
-}
-
-function checkEligibility() {
-  const selectedCourse = courses[courseSelect.value];
-  const userAPS = parseInt(document.getElementById('aps').value);
-  const results = [];
-
-  let totalScore = 0;
-  let subjectCount = 0;
-  let anyBelowMinimum = false;
-
-  for (const subject in selectedCourse.requirements) {
-    const mark = parseInt(document.getElementById(`sub-${subject}`).value);
-    const required = selectedCourse.requirements[subject];
-    const diff = mark - required;
-    subjectCount++;
-
-    let category = '';
-    let color = '';
-
-    if (mark >= required) {
-      if (diff <= 5) { category = 'Minimum Met'; color = 'orange'; }
-      else if (diff <= 25) { category = 'Moderate Match'; color = 'gold'; }
-      else if (diff <= 50) { category = 'Strong Match'; color = 'lightgreen'; }
-      else { category = 'Very Strong Match'; color = 'green'; }
-    } else {
-      category = 'Below Requirement'; color = 'red'; anyBelowMinimum = true;
+    // Populate dropdown initially
+    function populateCourseSelect(filter = '') {
+      courseSelect.innerHTML = '';
+      courses.forEach((course, idx) => {
+        if (course.name.toLowerCase().includes(filter)) {
+          const opt = document.createElement('option');
+          opt.value = idx;
+          opt.textContent = course.name;
+          courseSelect.appendChild(opt);
+        }
+      });
+      updateSubjectInputs();
     }
 
-    totalScore += mark;
-    results.push(`<li style="color: ${color};">${subject}: ${mark}% — ${category}</li>`);
-  }
+    // Update subjects inputs when course changes
+    function updateSubjectInputs() {
+      const selected = courses[courseSelect.value];
+      subjectsContainer.innerHTML = '';
+      for (const sub in selected.requirements) {
+        const label = document.createElement('label');
+        label.textContent = `${sub} Mark:`;
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.id = `sub-${sub}`;
+        input.min = 0;
+        input.max = 100;
+        subjectsContainer.appendChild(label);
+        subjectsContainer.appendChild(input);
+      }
+    }
 
-  let apsMsg = '';
-  const apsDiff = userAPS - selectedCourse.minAPS;
-  let apsSuccess = 0;
+    // Search handler
+    searchInput.addEventListener('input', () => {
+      populateCourseSelect(searchInput.value.trim().toLowerCase());
+    });
 
-  if (userAPS >= selectedCourse.minAPS) {
-    if (apsDiff <= 2) apsMsg = 'APS: Just Met';
-    else if (apsDiff <= 6) apsMsg = 'APS: Moderate';
-    else if (apsDiff <= 12) apsMsg = 'APS: Strong';
-    else apsMsg = 'APS: Very Strong';
-    apsSuccess = Math.min(apsDiff * 5 + 40, 95);
-  } else {
-    apsMsg = 'APS: Below Requirement';
-    apsSuccess = 25;
-  }
+    // Change handler
+    courseSelect.addEventListener('change', updateSubjectInputs);
 
-  if (anyBelowMinimum) apsSuccess = Math.min(apsSuccess, 40);
+    // initialize
+    populateCourseSelect();
 
-  const avgSubjectScore = totalScore / subjectCount;
-  const subjectScoreBoost = Math.min((avgSubjectScore - 50) * 0.5, 30);
-  const finalEstimate = Math.min(apsSuccess + subjectScoreBoost, 99).toFixed(1);
+    // click-limit logic
+    let eligibilityClicks = parseInt(localStorage.getItem('eligibilityClicks') || '0', 10);
+    let jobsClicks = parseInt(localStorage.getItem('jobsClicks') || '0', 10);
+    const maxClicks = Math.random() < 0.5 ? 8 : 12;
 
-  document.getElementById('resultBox').innerHTML = `
-    <h3>Results for ${selectedCourse.name}</h3>
-    <ul>${results.join('')}</ul>
-    <p><strong>${apsMsg}</strong></p>
-    <p><strong>Estimated success rate: ${finalEstimate}%</strong></p>
-  `;
-}
+    function handleButtonClick(btnId, fn) {
+      if (btnId === 'eligibilityBtn') {
+        eligibilityClicks++;
+        localStorage.setItem('eligibilityClicks', eligibilityClicks);
+        if (eligibilityClicks >= maxClicks) {
+          return showAdButton(btnId, fn);
+        }
+      } else {
+        jobsClicks++;
+        localStorage.setItem('jobsClicks', jobsClicks);
+        if (jobsClicks >= maxClicks) {
+          return showAdButton(btnId, fn);
+        }
+      }
+      fn();
+    }
 
-function showJobs() {
-  const selectedCourse = courses[courseSelect.value];
-  const jobs = selectedCourse.jobs || [];
-  const jobsBox = document.getElementById('jobsBox');
+    function showAdButton(origId, fn) {
+      const origBtn = document.getElementById(origId);
+      const adBtn = document.createElement('button');
+      adBtn.textContent = 'Click Here & Wait 8s to Get Features Back';
+      adBtn.style.backgroundColor = 'red';
+      adBtn.onclick = () => {
+        window.open(adUrl, '_blank');
+        noticeBox.textContent = 'Please wait 8 seconds then return to this tab. Features will be back.';
+        setTimeout(() => {
+          noticeBox.textContent = '';
+          adBtn.replaceWith(origBtn);
+          eligibilityClicks = jobsClicks = 0;
+          localStorage.setItem('eligibilityClicks', '0');
+          localStorage.setItem('jobsClicks', '0');
+        }, 8000);
+      };
+      origBtn.replaceWith(adBtn);
+    }
 
-  if (jobs.length === 0) {
-    jobsBox.innerHTML = "<p>No job information available for this course.</p>";
-    return;
-  }
+    function checkEligibility() {
+      const course = courses[courseSelect.value];
+      const userAPS = parseInt(document.getElementById('aps').value, 10) || 0;
+      let total = 0, count = 0, anyBelow = false, results = [];
 
-  jobsBox.innerHTML = `
-    <h3>Possible Career Paths for ${selectedCourse.name}</h3>
-    <ul>${jobs.map(job => `<li>${job}</li>`).join('')}</ul>
-  `;
-}
-</script>
+      for (const sub in course.requirements) {
+        const mark = parseInt(document.getElementById(`sub-${sub}`).value, 10) || 0;
+        const req = course.requirements[sub];
+        const diff = mark - req;
+        let category, color;
+        if (mark >= req) {
+          if (diff <= 5) { category = 'Minimum Met'; color = 'orange'; }
+          else if (diff <= 25) { category = 'Moderate Match'; color = 'gold'; }
+          else if (diff <= 50) { category = 'Strong Match'; color = 'lightgreen'; }
+          else { category = 'Very Strong Match'; color = 'green'; }
+        } else {
+          category = 'Below Requirement'; color = 'red'; anyBelow = true;
+        }
+        total += mark; count++;
+        results.push(`<li style="color:${color}">${sub}: ${mark}% — ${category}</li>`);
+      }
+
+      // APS messaging
+      const apsDiff = userAPS - course.minAPS;
+      let apsMsg, apsScore;
+      if (apsDiff >= 0) {
+        if (apsDiff <= 2) apsMsg = 'APS: Just Met';
+        else if (apsDiff <= 6) apsMsg = 'APS: Moderate';
+        else if (apsDiff <= 12) apsMsg = 'APS: Strong';
+        else apsMsg = 'APS: Very Strong';
+        apsScore = Math.min(apsDiff * 5 + 40, 95);
+      } else {
+        apsMsg = 'APS: Below Requirement';
+        apsScore = 25;
+      }
+      if (anyBelow) apsScore = Math.min(apsScore, 40);
+
+      const avg = total / count;
+      const boost = Math.min((avg - 50) * 0.5, 30);
+      const finalPct = Math.min(apsScore + boost, 99).toFixed(1);
+
+      resultBox.innerHTML = `
+        <h3>Results for ${course.name}</h3>
+        <ul>${results.join('')}</ul>
+        <p><strong>${apsMsg}</strong></p>
+        <p><strong>Estimated success rate: ${finalPct}%</strong></p>
+      `;
+    }
+
+    function showJobs() {
+      const course = courses[courseSelect.value];
+      if (!course.jobs || course.jobs.length === 0) {
+        jobsBox.innerHTML = `<p>No job information available for ${course.name}.</p>`;
+        return;
+      }
+      jobsBox.innerHTML = `
+        <h3>Possible Career Paths for ${course.name}</h3>
+        <ul>${course.jobs.map(j=>`<li>${j}</li>`).join('')}</ul>
+      `;
+    }
+
+    // attach to buttons
+    document.getElementById('eligibilityBtn')
+            .addEventListener('click', () => handleButtonClick('eligibilityBtn', checkEligibility));
+    document.getElementById('jobsBtn')
+            .addEventListener('click', () => handleButtonClick('jobsBtn', showJobs));
+  </script>
 </body>
 </html>
