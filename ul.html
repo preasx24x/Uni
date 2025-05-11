@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DTECH | UJ Course Eligibility Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e6f0fa;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .logo-container {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .logo-container img {
+      height: 100px;
+    }
+    header {
+      background-color: #00509e;
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+    }
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: white;
+      border: 1px solid #cce0f5;
+      border-radius: 8px;
+      flex-grow: 1;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #003366;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #aac8f0;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #0073e6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    button:hover {
+      background-color: #005bb5;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #dfefff;
+      border: 1px solid #0073e6;
+      border-radius: 4px;
+    }
+    footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      margin-top: auto;
+    }
+    #supportBtn {
+      position: fixed;
+      top: 12px;
+      right: 0;
+      width: 25%;
+      max-width: 180px;
+      padding: 10px;
+      font-size: 14px;
+      background-color: #ff3b3f;
+      color: white;
+      border: none;
+      border-radius: 8px 0 0 8px;
+      cursor: pointer;
+      z-index: 1000;
+      text-align: center;
+      box-shadow: -2px 2px 6px rgba(0, 0, 0, 0.2);
+    }
+    #supportBtn:hover {
+      background-color: #d62c30;
+    }
+    #noticeBox {
+      text-align: center;
+      color: red;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+  <button id="supportBtn" onclick="window.open(adUrl, '_blank')">Support</button>
+  <div class="logo-container">
+    <img src="logo.png" alt="DTECH Logo" />
+  </div>
+  <main>
+    <h2>UJ Course Eligibility Checker</h2>
+    <div id="noticeBox"></div>
+
+    <label for="search">Search courses:</label>
+    <input type="text" id="search" placeholder="Type course name..." />
+
+    <label for="course">Choose a course:</label>
+    <select id="course"></select>
+
+    <label for="aps">Enter your APS:</label>
+    <input type="number" id="aps" min="0" max="50" />
+
+    <div id="subjectsContainer"></div>
+
+    <button id="eligibilityBtn" onclick="handleButtonClick('eligibilityBtn', checkEligibility)">Check Eligibility</button>
+    <button id="jobsBtn" onclick="handleButtonClick('jobsBtn', showJobs)">Show Related Jobs</button>
+
+    <div class="result" id="resultBox"></div>
+    <div class="result" id="jobsBox"></div>
+  </main>
+  <footer>
+    &copy; 2025 DTECH | Developed and Owned by Preasx24. All rights reserved.
+  </footer>
+
+  <script>
+    const adUrl = 'https://cafewarriors.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365';
+
+    const courses = [/* your full course array pasted here exactly as above */];
+
+    const courseSelect = document.getElementById('course');
+    const searchInput = document.getElementById('search');
+
+    function populateDropdown(filteredCourses) {
+      courseSelect.innerHTML = '';
+      filteredCourses.forEach((course, index) => {
+        const opt = document.createElement('option');
+        opt.value = index;
+        opt.textContent = course.name;
+        courseSelect.appendChild(opt);
+      });
+      if (filteredCourses.length > 0) {
+        courseSelect.selectedIndex = 0;
+        courseSelect.dispatchEvent(new Event('change'));
+      } else {
+        document.getElementById('subjectsContainer').innerHTML = '';
+      }
+    }
+
+    searchInput.addEventListener('input', () => {
+      const searchValue = searchInput.value.toLowerCase();
+      const filtered = courses.filter(c => c.name.toLowerCase().includes(searchValue));
+      populateDropdown(filtered);
+    });
+
+    courseSelect.addEventListener('change', () => {
+      const selectedCourse = courses[courseSelect.value];
+      const container = document.getElementById('subjectsContainer');
+      container.innerHTML = '';
+      if (selectedCourse && selectedCourse.requirements) {
+        for (const subject in selectedCourse.requirements) {
+          container.innerHTML += `<label>${subject} Mark:</label>
+          <input type="number" id="sub-${subject}" min="0" max="100" />`;
+        }
+      }
+    });
+
+    populateDropdown(courses);
+
+    let eligibilityClicks = parseInt(localStorage.getItem('eligibilityClicks') || 0);
+    let jobsClicks = parseInt(localStorage.getItem('jobsClicks') || 0);
+    const maxClicks = Math.random() < 0.5 ? 8 : 12;
+
+    function handleButtonClick(buttonId, originalFunction) {
+      if (buttonId === 'eligibilityBtn') {
+        eligibilityClicks++;
+        localStorage.setItem('eligibilityClicks', eligibilityClicks);
+        if (eligibilityClicks >= maxClicks) {
+          showAdButton(buttonId, originalFunction);
+          return;
+        }
+      } else if (buttonId === 'jobsBtn') {
+        jobsClicks++;
+        localStorage.setItem('jobsClicks', jobsClicks);
+        if (jobsClicks >= maxClicks) {
+          showAdButton(buttonId, originalFunction);
+          return;
+        }
+      }
+      originalFunction();
+    }
+
+    function showAdButton(buttonId, callback) {
+      const button = document.getElementById(buttonId);
+      button.textContent = "Please support us first";
+      button.onclick = () => {
+        window.open(adUrl, "_blank");
+        setTimeout(() => {
+          button.textContent = buttonId === 'eligibilityBtn' ? 'Check Eligibility' : 'Show Related Jobs';
+          button.onclick = () => handleButtonClick(buttonId, callback);
+        }, 3000);
+      };
+    }
+
+    function checkEligibility() {
+      const selected = courses[courseSelect.value];
+      const aps = parseInt(document.getElementById('aps').value);
+      let eligible = aps >= selected.minAPS;
+      for (const subject in selected.requirements) {
+        const val = parseInt(document.getElementById(`sub-${subject}`)?.value || 0);
+        const req = parseInt(selected.requirements[subject]);
+        if (val < req) eligible = false;
+      }
+      const box = document.getElementById('resultBox');
+      box.innerHTML = eligible ? `<strong>You are eligible for ${selected.name}.</strong>` :
+        `<strong>You do not meet the minimum requirements for ${selected.name}.</strong>`;
+    }
+
+    function showJobs() {
+      const selected = courses[courseSelect.value];
+      const box = document.getElementById('jobsBox');
+      box.innerHTML = `<strong>Career Opportunities:</strong><ul>${selected.jobs.map(j => `<li>${j}</li>`).join('')}</ul>`;
+    }
+  </script>
+</body>
+</html>
