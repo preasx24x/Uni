@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Search & Download Songs</title>
+  <title>MP3 Song Search & Download</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background: #f9f9f9;
       padding: 20px;
-      background-color: #f2f2f2;
     }
     h1 {
       color: #333;
     }
     input[type="text"] {
-      padding: 10px;
       width: 70%;
+      padding: 10px;
       font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
     }
     button {
       padding: 10px 16px;
@@ -24,23 +24,22 @@
       background-color: #2196F3;
       color: white;
       border: none;
-      border-radius: 4px;
-      cursor: pointer;
+      border-radius: 5px;
       margin-left: 5px;
+      cursor: pointer;
     }
     #results {
       margin-top: 30px;
     }
     .result {
-      background-color: white;
+      background: #fff;
       padding: 15px;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       margin-bottom: 15px;
     }
     .result h3 {
       margin: 0 0 10px;
-      font-size: 18px;
     }
     .download-btn {
       background-color: #4CAF50;
@@ -48,22 +47,29 @@
       padding: 8px 14px;
       text-decoration: none;
       border-radius: 4px;
-      display: inline-block;
       font-weight: bold;
+      display: inline-block;
+    }
+    .fallback-btn {
+      background-color: #f57c00;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 4px;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
 
   <h1>Search & Download MP3 Songs</h1>
-  <input type="text" id="search" placeholder="e.g. Tyler ICU Mnike">
+  <input type="text" id="search" placeholder="e.g. Amapiano 2024, Young Stunna, etc.">
   <button onclick="searchSongs()">Search</button>
 
   <div id="results"></div>
 
   <script>
-    const apiKey = "AIzaSyAKtm0UunyHKxsRHf17tpc6GuQoscWvLxc"; // your API key
-    const cx = "32bd41e9cb56748de"; // your new CSE ID
+    const apiKey = "AIzaSyAKtm0UunyHKxsRHf17tpc6GuQoscWvLxc";
+    const cx = "32bd41e9cb56748de";
 
     async function searchSongs() {
       const query = document.getElementById("search").value;
@@ -77,25 +83,33 @@
       if (data.items) {
         let found = false;
         data.items.forEach(item => {
-          // Show only .mp3 links
-          if (item.link.endsWith(".mp3")) {
+          const div = document.createElement("div");
+          div.className = "result";
+
+          if (item.link.includes(".mp3")) {
             found = true;
-            const div = document.createElement("div");
-            div.className = "result";
             div.innerHTML = `
               <h3>${item.title}</h3>
               <p>${item.snippet}</p>
               <a href="${item.link}" class="download-btn" target="_blank">Download MP3</a>
             `;
-            resultsDiv.appendChild(div);
+          } else {
+            // Fallback to visiting page
+            div.innerHTML = `
+              <h3>${item.title}</h3>
+              <p>${item.snippet}</p>
+              <a href="${item.link}" class="fallback-btn" target="_blank">Visit Page</a>
+            `;
           }
+
+          resultsDiv.appendChild(div);
         });
 
         if (!found) {
-          resultsDiv.innerHTML = "<p>No downloadable MP3s found. Try another song title.</p>";
+          resultsDiv.innerHTML += `<p style="margin-top:10px;">No direct MP3 links found, but we listed pages that might have music downloads.</p>`;
         }
       } else {
-        resultsDiv.innerHTML = "<p>No results found.</p>";
+        resultsDiv.innerHTML = "<p>No results found. Try a different song name or artist.</p>";
       }
     }
   </script>
