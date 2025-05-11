@@ -1,50 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Search Past Papers</title>
+  <title>Search Past Exam Papers</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      color: #333;
     }
     input[type="text"] {
       padding: 10px;
       width: 70%;
       font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
     button {
-      padding: 10px;
+      padding: 10px 16px;
       font-size: 16px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+    #results {
+      margin-top: 30px;
     }
     .result {
-      margin-top: 20px;
+      background-color: white;
       padding: 15px;
-      border: 1px solid #ccc;
       border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 15px;
     }
     .result h3 {
-      margin: 0 0 10px 0;
+      margin: 0 0 10px;
+      font-size: 18px;
     }
     .download-btn {
       background-color: #4CAF50;
       color: white;
-      padding: 8px 12px;
+      padding: 8px 14px;
       text-decoration: none;
       border-radius: 4px;
       display: inline-block;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-  <h1>Find and Download Past Papers</h1>
+  <h1>Find and Download Exam Papers</h1>
   <input type="text" id="search" placeholder="e.g. Physical Science P2 June 2024">
   <button onclick="searchPapers()">Search</button>
 
   <div id="results"></div>
 
   <script>
-    const apiKey = "AIzaSyAKtm0UunyHKxsRHf17tpc6GuQoscWvLxc";
+    const apiKey = "AIzaSyAKtm0UunyHKxsRHf17tpc6GuQoscWvLxc"; // your Google API key
     const cx = "917649f76330d4492"; // your search engine ID
 
     async function searchPapers() {
@@ -57,16 +75,25 @@
       resultsDiv.innerHTML = "";
 
       if (data.items) {
+        let found = false;
         data.items.forEach(item => {
-          const div = document.createElement("div");
-          div.className = "result";
-          div.innerHTML = `
-            <h3>${item.title}</h3>
-            <p>${item.snippet}</p>
-            <a href="${item.link}" class="download-btn" target="_blank">Download</a>
-          `;
-          resultsDiv.appendChild(div);
+          // Filter to show only .pdf files
+          if (item.link.endsWith(".pdf")) {
+            found = true;
+            const div = document.createElement("div");
+            div.className = "result";
+            div.innerHTML = `
+              <h3>${item.title}</h3>
+              <p>${item.snippet}</p>
+              <a href="${item.link}" class="download-btn" target="_blank">Download PDF</a>
+            `;
+            resultsDiv.appendChild(div);
+          }
         });
+
+        if (!found) {
+          resultsDiv.innerHTML = "<p>No downloadable PDFs found. Try another search term.</p>";
+        }
       } else {
         resultsDiv.innerHTML = "<p>No results found.</p>";
       }
