@@ -139,101 +139,166 @@
   <script>
     const adUrl = 'https://cafewarriors.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365';
 
-    const courses = [/* your full course array pasted here exactly as above */];
+    const courses = [
+{ "name": "Bachelor of Commerce in Accounting Sciences", "code": "07130044", "minAPS": 34, "requirements": { "English Home Language or English First Additional Language": "5", "Mathematics": "6" }, "jobs": [ "Chartered accountant", "External auditor", "Taxation professional", "Financial director" ], "campus": "Hatfield" }, { "name": "Bachelor of Commerce Investment Management", "code": "07130252", "minAPS": 34, "requirements": { "English Home Language or English First Additional Language": "5", "Mathematics": "6" }, "jobs": [ "Portfolio/fund manager", "Investment analyst", "Risk manager", "Wealth manager" ], "campus": "Hatfield" }, { "name": "Bachelor of Commerce Financial Management Sciences", "code": "07130201", "minAPS": 32, "requirements": { "English Home Language or English First Additional Language": "5", "Mathematics": "5" }, "jobs": [ "Management accountant", "Financial advisor", "Tax auditor", "Financial manager" ], "campus": "Hatfield" }, { "name": "Bachelor of Commerce Econometrics", "code": "07130173", "minAPS": 32, "requirements": { "English Home Language or English First Additional Language": "5", "Mathematics": "6" }, "jobs": [ "Econometrician", "Statistical analyst", "Trader or broker", "Economic consultant" ], "campus": "Hatfield" }, { "name": "Bachelor of Commerce Economics", "code": "07130085", "minAPS": 32, "requirements": { "English Home Language or English First Additional Language": "5", "Mathematics": "5" }, "jobs": [ "Economist", "Policy analyst", "Researcher", "Banking analyst" ], "campus": "Hatfield" }, { "name": "Bachelor of Commerce Law", "code": "07130144", "minAPS": 32, "requirements": { "English Home Language or English First Additional Language": "5", "Mathematics": "5" }, "jobs": [ "Legal advisor", "Attorney", "Advocate", "Compliance officer" ], "campus": "Hatfield" }, { "name": "Bachelor of Commerce Statistics", "code": "07130163", "minAPS": 32, "requirements": { "English Home Language or English First Additional Language": "5", "Mathematics": "5" }, "jobs": [ "Data scientist", "Statistical analyst", "Consultant", "Researcher" ], "campus": "Hatfield" }, { "name": "Bachelor of Commerce Informatics", "code": "07130142", "minAPS": 30, "requirements": { "English Home Language or English First Additional Language": "5", "Mathematics": "5" }, "jobs": [ "Business analyst", "Systems analyst", "IT training officer", "Information systems developer" ], "campus": "Hatfield" }, { "name": "Bachelor of Commerce Agribusiness Management", "code": "07130023", "minAPS": 30, "requirements": { "English Home Language or English First Additional Language": "5", "Mathematics": "5" }, "jobs": [ "Commodity trader", "Supply chain manager", "Agricultural consultant", "Food processing manager" ], "campus": "Hatfield" }, { "name": "Bachelor of Commerce", "code": "07130222", "minAPS": 30, "requirements": { "English Home Language or English First Additional Language": "5", "Mathematics": "4" }, "jobs": [ "Business consultant", "Financial analyst", "Marketing officer", "Entrepreneur" ], "campus": "Hatfield" }, { "name": "Bachelor of Commerce Business Management", "code": "07130211", "minAPS": 30, "requirements": { "English Home Language or English First Additional Language": "5", "Mathematics": "4" }, "jobs": [ "General manager", "Management consultant", "Operations manager", "Lecturer" ], "campus": "Hatfield" }, { "name": "Bachelor of Commerce Supply Chain Management", "code": "07130262", "minAPS": 30, "requirements": { "English Home Language or English First Additional Language": "5", "Mathematics": "4" }, "jobs": [ "Supply chain strategist", "Logistics manager", "Procurement manager", "Warehouse operations manager" ], "campus": "Hatfield" }, { "name": "Bachelor of Commerce Marketing Management", "code": "07130232", "minAPS": 30, "requirements": { "English Home Language or English First Additional Language": "5", "Mathematics": "4" }, "jobs": [ "Brand manager", "Advertising manager", "Market researcher", "Sales manager" ], "campus": "Hatfield" }, { "name": "Bachelor of Commerce Human Resource Management", "code": "07130242", "minAPS": 30, "requirements": { "English Home Language or English First Additional Language": "5", "Mathematics": "4" }, "jobs": [ "HR practitioner", "Labour relations specialist", "Training officer", "Personnel manager" ], "campus": "Hatfield" }, { "name": "Bachelor of Commerce (4-year programme)", "code": "07130092", "minAPS": 26, "requirements": { "English Home Language or English First Additional Language": "4", "Mathematics": "3" }, "jobs": [ "Varies by specialisation; consult student advisor" ], "campus": "Mamelodi/Hatfield" }, { "name": "Bachelor of Administration Public Management and International Relations", "code": "07130111", "minAPS": 28, "requirements": { "English Home Language or English First Additional Language": "5", "Mathematics or Mathematical Literacy": "3 or 4" }, "jobs": [ "Diplomat", "Policy analyst", "Public sector manager", "NGO officer" ], "campus": "Hatfield" }
+];
 
-    const courseSelect = document.getElementById('course');
-    const searchInput = document.getElementById('search');
+    <script>
+const searchInput = document.getElementById('search');
+const courseSelect = document.getElementById('course');
 
-    function populateDropdown(filteredCourses) {
-      courseSelect.innerHTML = '';
-      filteredCourses.forEach((course, index) => {
-        const opt = document.createElement('option');
-        opt.value = index;
-        opt.textContent = course.name;
-        courseSelect.appendChild(opt);
-      });
-      if (filteredCourses.length > 0) {
-        courseSelect.selectedIndex = 0;
-        courseSelect.dispatchEvent(new Event('change'));
-      } else {
-        document.getElementById('subjectsContainer').innerHTML = '';
-      }
+searchInput.addEventListener('input', () => {
+  const searchTerm = searchInput.value.toLowerCase();
+  courseSelect.innerHTML = '';
+  courses.forEach((course, index) => {
+    if (course.name.toLowerCase().includes(searchTerm)) {
+      const opt = document.createElement('option');
+      opt.value = index;
+      opt.textContent = course.name;
+      courseSelect.appendChild(opt);
+    }
+  });
+  courseSelect.dispatchEvent(new Event('change'));
+});
+
+courses.forEach((course, index) => {
+  const opt = document.createElement('option');
+  opt.value = index;
+  opt.textContent = course.name;
+  courseSelect.appendChild(opt);
+});
+
+courseSelect.addEventListener('change', () => {
+  const selectedCourse = courses[courseSelect.value];
+  const container = document.getElementById('subjectsContainer');
+  container.innerHTML = '';
+  for (const subject in selectedCourse.requirements) {
+    container.innerHTML += `
+      <label>${subject} Mark:</label>
+      <input type="number" id="sub-${subject}" min="0" max="100" />
+    `;
+  }
+});
+courseSelect.dispatchEvent(new Event('change'));
+
+let eligibilityClicks = parseInt(localStorage.getItem('eligibilityClicks') || 0);
+let jobsClicks = parseInt(localStorage.getItem('jobsClicks') || 0);
+const maxClicks = Math.random() < 0.5 ? 8 : 12;
+
+function handleButtonClick(buttonId, originalFunction) {
+  if (buttonId === 'eligibilityBtn') {
+    eligibilityClicks++;
+    localStorage.setItem('eligibilityClicks', eligibilityClicks);
+    if (eligibilityClicks >= maxClicks) {
+      showAdButton(buttonId, originalFunction);
+      return;
+    }
+  } else if (buttonId === 'jobsBtn') {
+    jobsClicks++;
+    localStorage.setItem('jobsClicks', jobsClicks);
+    if (jobsClicks >= maxClicks) {
+      showAdButton(buttonId, originalFunction);
+      return;
+    }
+  }
+  originalFunction();
+}
+
+function showAdButton(buttonId, originalFunction) {
+  const btn = document.getElementById(buttonId);
+  const newBtn = document.createElement('button');
+  newBtn.textContent = 'Click Here & Wait 8s to Get Features Back';
+  newBtn.style.backgroundColor = 'red';
+  newBtn.onclick = () => {
+    window.open(adUrl, '_blank');
+    document.getElementById('noticeBox').textContent = 'Please wait 8 seconds then return to this tab. Features will be back.';
+    setTimeout(() => {
+      document.getElementById('noticeBox').textContent = '';
+      newBtn.replaceWith(btn);
+      eligibilityClicks = 0;
+      jobsClicks = 0;
+      localStorage.setItem('eligibilityClicks', '0');
+      localStorage.setItem('jobsClicks', '0');
+    }, 8000);
+  };
+  btn.replaceWith(newBtn);
+}
+
+function checkEligibility() {
+  const selectedCourse = courses[courseSelect.value];
+  const userAPS = parseInt(document.getElementById('aps').value);
+  const results = [];
+
+  let totalScore = 0;
+  let subjectCount = 0;
+  let anyBelowMinimum = false;
+
+  for (const subject in selectedCourse.requirements) {
+    const mark = parseInt(document.getElementById(`sub-${subject}`).value);
+    const required = selectedCourse.requirements[subject];
+    const diff = mark - required;
+    subjectCount++;
+
+    let category = '';
+    let color = '';
+
+    if (mark >= required) {
+      if (diff <= 5) { category = 'Minimum Met'; color = 'orange'; }
+      else if (diff <= 25) { category = 'Moderate Match'; color = 'gold'; }
+      else if (diff <= 50) { category = 'Strong Match'; color = 'lightgreen'; }
+      else { category = 'Very Strong Match'; color = 'green'; }
+    } else {
+      category = 'Below Requirement'; color = 'red'; anyBelowMinimum = true;
     }
 
-    searchInput.addEventListener('input', () => {
-      const searchValue = searchInput.value.toLowerCase();
-      const filtered = courses.filter(c => c.name.toLowerCase().includes(searchValue));
-      populateDropdown(filtered);
-    });
+    totalScore += mark;
+    results.push(`<li style="color: ${color};">${subject}: ${mark}% — ${category}</li>`);
+  }
 
-    courseSelect.addEventListener('change', () => {
-      const selectedCourse = courses[courseSelect.value];
-      const container = document.getElementById('subjectsContainer');
-      container.innerHTML = '';
-      if (selectedCourse && selectedCourse.requirements) {
-        for (const subject in selectedCourse.requirements) {
-          container.innerHTML += `<label>${subject} Mark:</label>
-          <input type="number" id="sub-${subject}" min="0" max="100" />`;
-        }
-      }
-    });
+  let apsMsg = '';
+  const apsDiff = userAPS - selectedCourse.minAPS;
+  let apsSuccess = 0;
 
-    populateDropdown(courses);
+  if (userAPS >= selectedCourse.minAPS) {
+    if (apsDiff <= 2) apsMsg = 'APS: Just Met';
+    else if (apsDiff <= 6) apsMsg = 'APS: Moderate';
+    else if (apsDiff <= 12) apsMsg = 'APS: Strong';
+    else apsMsg = 'APS: Very Strong';
+    apsSuccess = Math.min(apsDiff * 5 + 40, 95);
+  } else {
+    apsMsg = 'APS: Below Requirement';
+    apsSuccess = 25;
+  }
 
-    let eligibilityClicks = parseInt(localStorage.getItem('eligibilityClicks') || 0);
-    let jobsClicks = parseInt(localStorage.getItem('jobsClicks') || 0);
-    const maxClicks = Math.random() < 0.5 ? 8 : 12;
+  if (anyBelowMinimum) apsSuccess = Math.min(apsSuccess, 40);
 
-    function handleButtonClick(buttonId, originalFunction) {
-      if (buttonId === 'eligibilityBtn') {
-        eligibilityClicks++;
-        localStorage.setItem('eligibilityClicks', eligibilityClicks);
-        if (eligibilityClicks >= maxClicks) {
-          showAdButton(buttonId, originalFunction);
-          return;
-        }
-      } else if (buttonId === 'jobsBtn') {
-        jobsClicks++;
-        localStorage.setItem('jobsClicks', jobsClicks);
-        if (jobsClicks >= maxClicks) {
-          showAdButton(buttonId, originalFunction);
-          return;
-        }
-      }
-      originalFunction();
-    }
+  const avgSubjectScore = totalScore / subjectCount;
+  const subjectScoreBoost = Math.min((avgSubjectScore - 50) * 0.5, 30);
+  const finalEstimate = Math.min(apsSuccess + subjectScoreBoost, 99).toFixed(1);
 
-    function showAdButton(buttonId, callback) {
-      const button = document.getElementById(buttonId);
-      button.textContent = "Please support us first";
-      button.onclick = () => {
-        window.open(adUrl, "_blank");
-        setTimeout(() => {
-          button.textContent = buttonId === 'eligibilityBtn' ? 'Check Eligibility' : 'Show Related Jobs';
-          button.onclick = () => handleButtonClick(buttonId, callback);
-        }, 3000);
-      };
-    }
+  document.getElementById('resultBox').innerHTML = `
+    <h3>Results for ${selectedCourse.name}</h3>
+    <ul>${results.join('')}</ul>
+    <p><strong>${apsMsg}</strong></p>
+    <p><strong>Estimated success rate: ${finalEstimate}%</strong></p>
+  `;
+}
 
-    function checkEligibility() {
-      const selected = courses[courseSelect.value];
-      const aps = parseInt(document.getElementById('aps').value);
-      let eligible = aps >= selected.minAPS;
-      for (const subject in selected.requirements) {
-        const val = parseInt(document.getElementById(`sub-${subject}`)?.value || 0);
-        const req = parseInt(selected.requirements[subject]);
-        if (val < req) eligible = false;
-      }
-      const box = document.getElementById('resultBox');
-      box.innerHTML = eligible ? `<strong>You are eligible for ${selected.name}.</strong>` :
-        `<strong>You do not meet the minimum requirements for ${selected.name}.</strong>`;
-    }
+function showJobs() {
+  const selectedCourse = courses[courseSelect.value];
+  const jobs = selectedCourse.jobs || [];
+  const jobsBox = document.getElementById('jobsBox');
 
-    function showJobs() {
-      const selected = courses[courseSelect.value];
-      const box = document.getElementById('jobsBox');
-      box.innerHTML = `<strong>Career Opportunities:</strong><ul>${selected.jobs.map(j => `<li>${j}</li>`).join('')}</ul>`;
-    }
-  </script>
+  if (jobs.length === 0) {
+    jobsBox.innerHTML = "<p>No job information available for this course.</p>";
+    return;
+  }
+
+  jobsBox.innerHTML = `
+    <h3>Possible Career Paths for ${selectedCourse.name}</h3>
+    <ul>${jobs.map(job => `<li>${job}</li>`).join('')}</ul>
+  `;
+}
+</script>
 </body>
 </html>
