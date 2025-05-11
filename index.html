@@ -2,59 +2,84 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Added meta tag for responsive design -->
   <title>D-TECh University Eligibility Checker</title>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f7fa;
+      font-size: 18px; /* Zoomed-in effect */
     }
 
     header {
+      position: relative;
       text-align: center;
-      padding: 50px 20px;
-      background: #fff;
+      padding: 40px 20px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     header img {
-      width: 250px;
+      width: 200px;
     }
 
     h1 {
       margin-top: 20px;
-      font-size: 50px;
-      color: #222;
+      font-size: 36px;
+      color: #2c3e50;
+    }
+
+    /* Small request/help button */
+    .help-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #28a745;
+      color: white;
+      padding: 10px 14px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .help-button:hover {
+      background-color: #1e7e34;
     }
 
     .buttons {
       display: flex;
       flex-direction: column;
-      width: 100%;
-      gap: 20px;
       padding: 20px;
+      gap: 10px;
     }
 
     .buttons button {
       width: 100%;
-      padding: 50px;
-      font-size: 32px;
+      padding: 20px;
+      font-size: 20px;
       font-weight: bold;
-      border: none;
-      border-radius: 15px;
+      border: 1px solid #007bff;
+      border-radius: 5px;
       background-color: #007bff;
       color: white;
       cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 10px;
+      box-sizing: border-box; /* Ensures full width */
     }
 
     .buttons button:hover {
       background-color: #0056b3;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 
     .buttons .terms {
       background-color: #f0f0f0;
       color: #333;
-      font-weight: bold;
-      border-radius: 15px;
     }
 
     .buttons .terms:hover {
@@ -63,22 +88,26 @@
 
     footer {
       text-align: center;
-      padding: 40px;
+      padding: 30px;
       background: #222;
       color: #ccc;
-      font-size: 24px;
-      margin-top: 40px;
+      font-size: 16px;
+      margin-top: 50px;
     }
 
-    /* Responsive design for smaller screens */
     @media (max-width: 600px) {
       h1 {
-        font-size: 32px;
+        font-size: 28px;
+      }
+
+      .help-button {
+        font-size: 12px;
+        padding: 8px 12px;
       }
 
       .buttons button {
-        padding: 20px;
-        font-size: 20px;
+        font-size: 18px;
+        padding: 18px;
       }
     }
   </style>
@@ -88,23 +117,23 @@
   <header>
     <img src="logo.png" alt="D-TECh Logo">
     <h1>D-TECh University Eligibility Checker</h1>
+    <button class="help-button" onclick="location.href='https://info.dtech24.co.za'">
+      Need Help?
+    </button>
   </header>
 
   <div class="buttons">
     <button onclick="location.href='ul.html'">University of Limpopo (UL)</button>
-    <button onclick="location.href='uj.html'">University of Johannesburg (Uj)</button>
+    <button onclick="location.href='uj.html'">University of Johannesburg (UJ)</button>
     <button onclick="location.href='test.html'">University of Pretoria (UP)</button>
     <button onclick="location.href='test.html'">University of the Witwatersrand (WITS)</button>
     <button onclick="location.href='tedt.html'">University of Cape Town (UCT)</button>
-<script async="async" data-cfasync="false" src="//conductorhimselfwhipped.com/17bdc3ff4d9e3bbe0f49799dd182c4c1/invoke.js"></script>
-<div id="container-17bdc3ff4d9e3bbe0f49799dd182c4c1"></div>
     <button class="terms" onclick="location.href='terms.html'">View Terms & Conditions</button>
   </div>
 
   <footer>
     &copy; 2025 D-TECh Services | Built and owned by Preasx24
   </footer>
-<script type='text/javascript' src='//https://cafewarriors.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365'></script>
 
 </body>
 </html>
